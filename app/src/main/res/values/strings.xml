@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Spirala</string>
+    <string name="home">Home</string>
+    <string name="details">Details</string>
+    <string name="search">Search…</string>
+    <string name="game_details">Game details</string>
+</resources>
