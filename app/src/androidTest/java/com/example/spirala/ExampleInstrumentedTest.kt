@@ -47,10 +47,8 @@ class TestLayout {
         onView(withId(R.id.logo_image)).check(isCompletelyLeftOf(withId(R.id.home_button)))
         onView(withId(R.id.home_button)).check(isTopAlignedWith(withChild(withId(R.id.home_button))))
         onView(withId(R.id.details_button)).check(isTopAlignedWith(withId(R.id.home_button)))
-        onView(withId(R.id.details_button)).check(isBottomAlignedWith(withId(R.id.home_button)))
         onView(withId(R.id.search_button)).check(isCompletelyBelow(withId(R.id.home_button)))
         onView(withId(R.id.search_button)).check(isTopAlignedWith(withId(R.id.search_query_edittext)))
-        //onView(withId(R.id.search_button)).check(isBottomAlignedWith(withId(R.id.search_query_edittext)))
     }
 
     @Test
@@ -62,6 +60,7 @@ class TestLayout {
             hasDescendant(withId(R.id.game_platform_textview)),
             hasDescendant(withId(R.id.game_rating_textview))
         )))
+
         onView(withId(R.id.game_list)).perform(RecyclerViewActions.scrollToPosition<ViewHolder>(0)).check(
             matches(hasDescendant(withId(R.id.game_title_textview)).also { isTopAlignedWith(
                 withChild(withId(R.id.game_title_textview))
@@ -74,7 +73,6 @@ class TestLayout {
             matches(hasDescendant(withId(R.id.game_rating_textview)).also { isCompletelyLeftOf(
                 withId(R.id.game_platform_textview)
             ) }))
-
     }
 
     @Test

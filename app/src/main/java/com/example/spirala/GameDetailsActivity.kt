@@ -32,7 +32,7 @@ class GameDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_details)
         title= findViewById(R.id.game_title_textview)
         cover = findViewById(R.id.cover_imageview)
-        platform=findViewById(R.id.game_platform_textview)
+        platform=findViewById(R.id.platform_textview)
         release_date=findViewById(R.id.release_date_textview)
         esrb=findViewById(R.id.esrb_rating_textview)
         developer=findViewById(R.id.developer_textview)
