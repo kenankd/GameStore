@@ -52,6 +52,14 @@ class GameDetailsFragment : Fragment(){
         reviewAdapter.setReviews(list)
         reviewList.adapter=reviewAdapter
         reviewList.layoutManager= LinearLayoutManager(activity, LinearLayoutManager.VERTICAL,false)
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.homeFragment -> {
+                    findNavController().navigate(GameDetailsFragmentDirections.actionGameDetailsFragmentToHomeFragment(game.title))
+                    true
+                }
+                else -> true
+            } }
         return view
     }
     private fun fillDetails(){
