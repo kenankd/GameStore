@@ -12,7 +12,7 @@
         android:layout_height="88dp">
 
         <TextView
-            android:id="@+id/game_title_textview"
+            android:id="@+id/item_title_textview"
             android:layout_width="267dp"
             android:layout_height="27dp"
             android:layout_marginTop="4dp"
@@ -56,7 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.059"
             app:layout_constraintStart_toEndOf="@+id/game_rating_textview"
-            app:layout_constraintTop_toBottomOf="@+id/game_title_textview" />
+            app:layout_constraintTop_toBottomOf="@+id/item_title_textview" />
 
         <TextView
             android:id="@+id/game_platform_textview"

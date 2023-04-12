@@ -39,19 +39,7 @@ class GameDetailsActivity : AppCompatActivity() {
         publisher=findViewById(R.id.publisher_textview)
         genre=findViewById(R.id.genre_textview)
         description=findViewById(R.id.description_textview)
-        homeBtn=findViewById(R.id.home_button)
-        detailsBtn=findViewById(R.id.details_button)
         reviewList=findViewById(R.id.review_list)
-        detailsBtn.isEnabled=false
-        homeBtn.setOnClickListener {
-            showHome()
-        }
-        val extras = intent.extras
-        if(extras==null) finish()
-        else{
-            game = getDetails(extras.getString("game_title",""))!!
-            fillDetails()
-        }
         reviewAdapter = ReviewListAdapter(mutableListOf())
         val list : List<UserImpression> = getDetails(title.text as String)!!.userImpressions.sortedByDescending {  userImpression -> userImpression.timestamp }
         reviewAdapter.setReviews(list)
@@ -71,16 +59,5 @@ class GameDetailsActivity : AppCompatActivity() {
             game.coverImage,"drawable",cover.context.packageName)
         cover.setImageResource(id)
     }
-    private fun showHome(){
-        val intent : Intent = Intent(this,HomeActivity::class.java)
-        intent.apply{
-            putExtra("game_title",game.title)
-        }
-        try{
-            startActivity(intent)
-        }
-        catch(e: ActivityNotFoundException){
-            Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
-        }
-    }
+
 }

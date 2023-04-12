@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -33,7 +34,6 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
@@ -49,5 +49,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:+'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:+'
     implementation 'androidx.tracing:tracing:1.1.0'
+    implementation("androidx.navigation:navigation-fragment-ktx:+")
+    implementation("androidx.navigation:navigation-ui-ktx:+")
+
+
 
 }
