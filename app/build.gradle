@@ -49,8 +49,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:+'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:+'
     implementation 'androidx.tracing:tracing:1.1.0'
-    implementation("androidx.navigation:navigation-fragment-ktx:+")
-    implementation("androidx.navigation:navigation-ui-ktx:+")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.0-alpha10")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.0-alpha10")
 
 
 

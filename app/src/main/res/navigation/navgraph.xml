@@ -24,6 +24,7 @@
             app:destination="@id/gameDetailsFragment" />
         <argument
             android:name="title"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="nogame"/>
     </fragment>
 </navigation>

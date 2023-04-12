@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class HomeFragment: Fragment() {
     private lateinit var gameList : RecyclerView
     private lateinit var gameListAdapter: GameListAdapter
-    val args : HomeFragmentArgs by navArgs()
+    private val args : HomeFragmentArgs by navArgs()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.homefragment,container,false)
         gameList = view.findViewById(R.id.game_list)
@@ -24,8 +24,8 @@ class HomeFragment: Fragment() {
         gameList.adapter=gameListAdapter
         gameList.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
         var bottomNav : BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
-        if(args.title==null)
-            //bottomNav.isEnabled=false
+        bottomNav.menu.getItem(0).isEnabled = !args.title.equals("nogame")
+        bottomNav.menu.getItem(1).isEnabled = !args.title.equals("nogame")
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.gameDetailsFragment -> {

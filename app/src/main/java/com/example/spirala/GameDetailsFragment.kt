@@ -46,6 +46,7 @@ class GameDetailsFragment : Fragment(){
         reviewList=view.findViewById(R.id.review_list)
         reviewAdapter = ReviewListAdapter(mutableListOf())
         var bottomNav : BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
+        bottomNav.menu.getItem(0).isEnabled=true
         game = getDetails(args.title)!!
         fillDetails()
         val list : List<UserImpression> = GameData.getDetails(title.text as String)!!.userImpressions.sortedByDescending { userImpression -> userImpression.timestamp }
