@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navgraph1">
+    android:id="@+id/navgraph1"
+    app:startDestination="@id/gameDetailsFragment2">
 
+    <fragment
+        android:id="@+id/gameDetailsFragment2"
+        android:name="com.example.spirala.GameDetailsFragment"
+        android:label="GameDetailsFragment" >
+        <action
+            android:id="@+id/action_gameDetailsFragment2_self"
+            app:destination="@id/gameDetailsFragment2" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
 </navigation>

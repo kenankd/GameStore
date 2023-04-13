@@ -59,7 +59,7 @@ class GameDetailsFragment : Fragment(){
             bottomNav.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.homeFragment -> {
-                        findNavController().navigate(GameDetailsFragmentDirections.actionGameDetailsFragmentToHomeFragment(game.title))
+                        findNavController().navigate(GameDetailsFragmentDirections.toHome(game.title))
                         true
                     }
                     else -> true

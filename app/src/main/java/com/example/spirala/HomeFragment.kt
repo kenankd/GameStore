@@ -50,7 +50,6 @@ class HomeFragment: Fragment() {
         requireView().findNavController().navigate(action)
     }
     private fun showGameLand(game:Game){
-        view
         val detailFragment : GameDetailsFragment = GameDetailsFragment()
         val bundle = Bundle()
         bundle.putString("title",game.title)
