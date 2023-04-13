@@ -56,15 +56,17 @@ class GameDetailsFragment : Fragment(){
         else {
             var bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
             bottomNav.menu.getItem(0).isEnabled=true
+            game = getDetails(args.title)!!
             bottomNav.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.homeFragment -> {
-                        findNavController().navigate(GameDetailsFragmentDirections.toHome(game.title))
+                        val action = GameDetailsFragmentDirections.toHome(game.title)
+                        findNavController().navigate(action)
                         true
                     }
                     else -> true
                 } }
-            game = getDetails(args.title)!!
+
             fillDetails()
         }
         val list : List<UserImpression> = GameData.getDetails(title.text as String)!!.userImpressions.sortedByDescending { userImpression -> userImpression.timestamp }

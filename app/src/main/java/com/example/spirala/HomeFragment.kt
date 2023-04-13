@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spirala.GameData.Companion.getAll
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -50,13 +51,14 @@ class HomeFragment: Fragment() {
         requireView().findNavController().navigate(action)
     }
     private fun showGameLand(game:Game){
-        val detailFragment : GameDetailsFragment = GameDetailsFragment()
+        /*val detailFragment : GameDetailsFragment = GameDetailsFragment()
         val bundle = Bundle()
         bundle.putString("title",game.title)
         detailFragment.arguments=bundle
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragmentContainerView2,detailFragment)
         transaction.addToBackStack(null)
-        transaction.commit()
+        transaction.commit()*/
+        (requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment).navController.navigate(GameDetailsFragmentDirections.toDetails(game.title))
     }
 }
