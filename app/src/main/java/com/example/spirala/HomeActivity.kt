@@ -3,6 +3,7 @@ package com.example.spirala
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -19,9 +20,15 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        val navController = navHostFragment.navController
-        val navView: BottomNavigationView = findViewById(R.id.bottom_nav)
-        navView.setupWithNavController(navController)
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+
+        }
+        else{
+            val navView: BottomNavigationView = findViewById(R.id.bottom_nav)
+            val navController = navHostFragment.navController
+            navView.setupWithNavController(navController)
+        }
+
     }
 
 }

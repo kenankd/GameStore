@@ -1,5 +1,6 @@
 package com.example.spirala
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spirala.GameData.Companion.getAll
 import com.example.spirala.GameData.Companion.getDetails
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -45,22 +47,30 @@ class GameDetailsFragment : Fragment(){
         description=view.findViewById(R.id.description_textview)
         reviewList=view.findViewById(R.id.review_list)
         reviewAdapter = ReviewListAdapter(mutableListOf())
-        var bottomNav : BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
-        bottomNav.menu.getItem(0).isEnabled=true
-        game = getDetails(args.title)!!
-        fillDetails()
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            game = if(arguments==null)
+                getAll()[0]
+            else getDetails(arguments!!.getString("title",""))!!
+            fillDetails()
+        }
+        else {
+            var bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
+            bottomNav.menu.getItem(0).isEnabled=true
+            bottomNav.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.homeFragment -> {
+                        findNavController().navigate(GameDetailsFragmentDirections.actionGameDetailsFragmentToHomeFragment(game.title))
+                        true
+                    }
+                    else -> true
+                } }
+            game = getDetails(args.title)!!
+            fillDetails()
+        }
         val list : List<UserImpression> = GameData.getDetails(title.text as String)!!.userImpressions.sortedByDescending { userImpression -> userImpression.timestamp }
         reviewAdapter.setReviews(list)
         reviewList.adapter=reviewAdapter
         reviewList.layoutManager= LinearLayoutManager(activity, LinearLayoutManager.VERTICAL,false)
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.homeFragment -> {
-                    findNavController().navigate(GameDetailsFragmentDirections.actionGameDetailsFragmentToHomeFragment(game.title))
-                    true
-                }
-                else -> true
-            } }
         return view
     }
     private fun fillDetails(){

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/gray"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="413dp"
+        android:layout_height="88dp">
+
+        <TextView
+            android:id="@+id/item_title_textview"
+            android:layout_width="267dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/game_rating_textview"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/game_rating_textview"
+            android:layout_width="87dp"
+            android:layout_height="82dp"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            android:shadowColor="@color/purple_700"
+            android:text="4.3"
+            android:textAllCaps="true"
+            android:textColor="@color/pinkish"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.133" />
+
+        <TextView
+            android:id="@+id/game_release_date_textview"
+            android:layout_width="99dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="36dp"
+            android:gravity="left|center"
+            android:text="TextView"
+            android:textColor="@color/lightgray"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.059"
+            app:layout_constraintStart_toEndOf="@+id/game_rating_textview"
+            app:layout_constraintTop_toBottomOf="@+id/item_title_textview" />
+
+        <TextView
+            android:id="@+id/game_platform_textview"
+            android:layout_width="100dp"
+            android:layout_height="25dp"
+            android:gravity="left|top"
+            android:text="TextView"
+            android:textColor="@color/lightgray"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.058"
+            app:layout_constraintStart_toEndOf="@+id/game_rating_textview"
+            app:layout_constraintTop_toBottomOf="@+id/game_release_date_textview"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="417dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="4dp"
+
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/game_platform_textview" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    />
+</androidx.cardview.widget.CardView>
