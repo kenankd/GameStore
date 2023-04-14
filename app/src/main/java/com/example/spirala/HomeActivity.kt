@@ -24,11 +24,11 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.home_activity)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            (supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment).navController.navigate(GameDetailsFragmentDirections.toDetails(
-                getAll()[0].title
-            ))
-            if((supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).childFragmentManager.fragments[0] is GameDetailsFragment){
-                (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController.navigate(GameDetailsFragmentDirections.toHome())
+            (supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment).navController.navigate(GameDetailsFragmentDirections.toDetails(getAll()[0].title))
+            if((supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).childFragmentManager.fragments.size != 0) {
+                if ((supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).childFragmentManager.fragments[0] is GameDetailsFragment) {
+                    (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController.navigate(GameDetailsFragmentDirections.toHome())
+                }
             }
         }
         else{

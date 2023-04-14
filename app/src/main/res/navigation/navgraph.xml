@@ -28,5 +28,8 @@
             android:name="title"
             app:argType="string"
             android:defaultValue="nogame"/>
+        <action
+            android:id="@+id/action_toHome"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
