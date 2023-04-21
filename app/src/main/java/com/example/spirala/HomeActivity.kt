@@ -1,33 +1,23 @@
 package com.example.spirala
 
-import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Toast
-import androidx.fragment.app.FragmentContainerView
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.spirala.GameData.Companion.getAll
-import com.example.spirala.GameData.Companion.getDetails
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView1) as NavHostFragment
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            (supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment).navController.navigate(GameDetailsFragmentDirections.toDetails(getAll()[0].title))
-            if((supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).childFragmentManager.fragments.size != 0) {
-                if ((supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).childFragmentManager.fragments[0] is GameDetailsFragment) {
-                    (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController.navigate(GameDetailsFragmentDirections.toHome())
+            (supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment).navController.navigate(HomeFragmentDirections.toDetails(getAll()[0].title))
+            if((supportFragmentManager.findFragmentById(R.id.fragmentContainerView1) as NavHostFragment).childFragmentManager.fragments.size != 0) {
+                if ((supportFragmentManager.findFragmentById(R.id.fragmentContainerView1) as NavHostFragment).childFragmentManager.fragments[0] is GameDetailsFragment) {
+                    (supportFragmentManager.findFragmentById(R.id.fragmentContainerView1) as NavHostFragment).navController.navigate(GameDetailsFragmentDirections.actionGameDetailsFragmentToHomeFragment())
                 }
             }
         }

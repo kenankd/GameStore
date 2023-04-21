@@ -21,8 +21,6 @@ class GameListAdapter(private var games:List<Game>,private val GameClicked : (ga
     }
 
     override fun getItemCount(): Int=games.size
-
-
     override fun onBindViewHolder(holder: GameHolder, position: Int) {
         holder.title.text=games[position].title
         holder.rating.text=games[position].rating.toString()

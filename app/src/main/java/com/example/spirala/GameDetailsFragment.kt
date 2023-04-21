@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -28,15 +27,13 @@ class GameDetailsFragment : Fragment(){
     private lateinit var publisher : TextView
     private lateinit var genre : TextView
     private lateinit var description : TextView
-    private lateinit var homeBtn : Button
-    private lateinit var detailsBtn : Button
     private lateinit var reviewList : RecyclerView
     private lateinit var reviewAdapter : ReviewListAdapter
-    val args: GameDetailsFragmentArgs by navArgs()
+    private val args: GameDetailsFragmentArgs by navArgs()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
         val view = inflater.inflate(R.layout.gamedetailsfragment,container,false)
-        title= view.findViewById(R.id.game_title_textview)
+        title= view.findViewById(R.id.item_title_textview)
         cover = view.findViewById(R.id.cover_imageview)
         platform=view.findViewById(R.id.platform_textview)
         release_date=view.findViewById(R.id.release_date_textview)
@@ -51,24 +48,22 @@ class GameDetailsFragment : Fragment(){
             game = if(arguments==null)
                 getAll()[0]
             else getDetails(arguments!!.getString("title",""))!!
-            fillDetails()
         }
         else {
-            var bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
+            val bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
             bottomNav.menu.getItem(0).isEnabled=true
             game = getDetails(args.title)!!
             bottomNav.setOnItemSelectedListener { item ->
                 when (item.itemId) {
-                    R.id.homeFragment -> {
-                        val action = GameDetailsFragmentDirections.toHome(game.title)
+                    R.id.homeItem -> {
+                        val action = GameDetailsFragmentDirections.actionGameDetailsFragmentToHomeFragment(game.title)
                         findNavController().navigate(action)
                         true
                     }
                     else -> true
                 } }
-
-            fillDetails()
         }
+        fillDetails()
         val list : List<UserImpression> = GameData.getDetails(title.text as String)!!.userImpressions.sortedByDescending { userImpression -> userImpression.timestamp }
         reviewAdapter.setReviews(list)
         reviewList.adapter=reviewAdapter

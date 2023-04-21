@@ -13,7 +13,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.`is` as Is
@@ -22,7 +21,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4::class)
 class TestLayout {
     fun hasItemCount(n: Int) = object : ViewAssertion {
         override fun check(view: View?, noViewFoundException: NoMatchingViewException?) {
@@ -44,17 +43,14 @@ class TestLayout {
 
     @Test
     fun elementsTest(){
-        onView(withId(R.id.logo_image)).check(isCompletelyLeftOf(withId(R.id.home_button)))
-        onView(withId(R.id.home_button)).check(isTopAlignedWith(withChild(withId(R.id.home_button))))
-        onView(withId(R.id.details_button)).check(isTopAlignedWith(withId(R.id.home_button)))
-        onView(withId(R.id.search_button)).check(isCompletelyBelow(withId(R.id.home_button)))
+
         onView(withId(R.id.search_button)).check(isTopAlignedWith(withId(R.id.search_query_edittext)))
     }
 
     @Test
     fun recyclerViewTest(){
         onView(withId(R.id.game_list)).perform(RecyclerViewActions.scrollToPosition<ViewHolder>(0)).check(matches(allOf(
-            hasDescendant(withId(R.id.game_title_textview)),
+            hasDescendant(withId(R.id.item_title_textview)),
             hasDescendant(withId(R.id.game_rating_textview)),
             hasDescendant(withId(R.id.game_release_date_textview)),
             hasDescendant(withId(R.id.game_platform_textview)),
@@ -62,11 +58,11 @@ class TestLayout {
         )))
 
         onView(withId(R.id.game_list)).perform(RecyclerViewActions.scrollToPosition<ViewHolder>(0)).check(
-            matches(hasDescendant(withId(R.id.game_title_textview)).also { isTopAlignedWith(
-                withChild(withId(R.id.game_title_textview))
+            matches(hasDescendant(withId(R.id.item_title_textview)).also { isTopAlignedWith(
+                withChild(withId(R.id.item_title_textview))
             ) }))
         onView(withId(R.id.game_list)).perform(RecyclerViewActions.scrollToPosition<ViewHolder>(0)).check(
-            matches(hasDescendant(withId(R.id.game_title_textview)).also { isCompletelyRightOf(
+            matches(hasDescendant(withId(R.id.item_title_textview)).also { isCompletelyRightOf(
                 withId(R.id.game_rating_textview)
             ) }))
         onView(withId(R.id.game_list)).perform(RecyclerViewActions.scrollToPosition<ViewHolder>(0)).check(
@@ -103,8 +99,6 @@ class TestLayout {
             hasDescendant(withText(prvaIgra.releaseDate)),
             hasDescendant(withText(prvaIgra.rating.toString()))
         ),click()))
-        onView(withId(R.id.home_button)).perform(click())
-        onView(withId(R.id.details_button)).perform(click())
         onView(withText(prvaIgra.description)).check(matches(isCompletelyDisplayed()))
     }
 }

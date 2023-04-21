@@ -23,32 +23,31 @@ class HomeFragment: Fragment() {
         val view = inflater.inflate(R.layout.homefragment,container,false)
         gameList = view.findViewById(R.id.game_list)
         gameList.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
+
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            var bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
-            bottomNav.menu.getItem(0).isEnabled = !args.title.equals("nogame")
-            bottomNav.menu.getItem(1).isEnabled = !args.title.equals("nogame")
+            val bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
+            bottomNav.menu.getItem(0).isEnabled = false
+            bottomNav.menu.getItem(1).isEnabled = args.title != null
             bottomNav.setOnItemSelectedListener { item ->
                 when (item.itemId) {
-                    R.id.gameDetailsFragment -> {
-                        findNavController().navigate(HomeFragmentDirections.toDetails(args.title))
+                    R.id.gameDetailsItem -> {
+                        findNavController().navigate(HomeFragmentDirections.toDetails(args.title!!))
                         true
                     }
                     else -> true
                 }
             }
             gameListAdapter = GameListAdapter(getAll()){game -> showGame(game) }
-            gameList.adapter=gameListAdapter
         }
         else{
             gameListAdapter = GameListAdapter(getAll()){game -> showGameLand(game) }
-            gameList.adapter=gameListAdapter
         }
+        gameList.adapter=gameListAdapter
         gameList.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
         return view
     }
     private fun showGame(game:Game){
-        val action = HomeFragmentDirections.toDetails(game.title)
-        requireView().findNavController().navigate(action)
+        requireView().findNavController().navigate(HomeFragmentDirections.toDetails(game.title))
     }
     private fun showGameLand(game:Game){
         (requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment).navController.navigate(GameDetailsFragmentDirections.toDetails(game.title))

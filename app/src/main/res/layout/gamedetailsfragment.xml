@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/game_title_textview"
+            android:id="@+id/item_title_textview"
             android:layout_width="402dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -181,7 +181,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="TextView"
-            app:layout_constrainedWidth="true" />
+            app:layout_constrainedWidth="true"
+            android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
 
