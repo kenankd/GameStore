@@ -18,6 +18,20 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1807768879">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="R5CT7001AFV" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung&#10; SM-A528B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1792919101">
           <value>
             <AndroidTestResultsTableState>
@@ -33,6 +47,34 @@
           </value>
         </entry>
         <entry key="-537550333">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="R5CT7001AFV" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung&#10; SM-A528B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-537550302">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="R5CT7001AFV" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung&#10; SM-A528B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-537550271">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -97,6 +139,34 @@
                   <entry key="R5CT7001AFV" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="adb-R5CT7001AFV-4rVdiW._adb-tls-connect._tcp" value="120" />
+                  <entry key="samsung&#10; SM-A528B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="777110143">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="R5CT7001AFV" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung&#10; SM-A528B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="2047328751">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="R5CT7001AFV" value="120" />
+                  <entry key="Tests" value="360" />
                   <entry key="samsung&#10; SM-A528B" value="120" />
                 </map>
               </option>
