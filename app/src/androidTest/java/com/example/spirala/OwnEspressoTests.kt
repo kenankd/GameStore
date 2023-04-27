@@ -21,8 +21,10 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class OwnEspressoTests {
+    //otvaranje aktivnosti
     @get:Rule
     var homeRule:ActivityScenarioRule<HomeActivity> = ActivityScenarioRule(HomeActivity::class.java)
+    //custom matcher koji sam dodao zbog errora vise viewova u hijerarhiji u testu 3
     private fun withIndex(matcher: Matcher<View?>, index: Int): Any {
         return object : TypeSafeMatcher<View>() {
             var currentIndex = 0
@@ -49,7 +51,7 @@ class OwnEspressoTests {
     fun testScenario1(){
         //click na drugu igricu po redu u recycler view-u tj. NBA 2K23
         onView(withId(R.id.game_list)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
-        //provjera da li je su detalji o igri pravilno rasporedjeni na ekranu
+        //provjera da li su detalji o igrici pravilno rasporedjeni na ekranu
         onView(withId(R.id.item_title_textview)).check(matches(isDisplayed()))
         onView(withId(R.id.item_title_textview)).check(isCompletelyAbove(withId(R.id.cover_imageview)))
         onView(withId(R.id.platform_textview)).check(isCompletelyBelow(withId(R.id.cover_imageview)))
@@ -68,19 +70,18 @@ class OwnEspressoTests {
         onView(withId(R.id.item_title_textview)).check(matches(withText(getAll()[1].title)))
         //povratak na home fragment
         onView(withId(R.id.homeItem)).perform(click())
-        //provjera da li je fragment promijenjen
+        //provjera da li je fragment promijenjen (search button se nalazi samo na home fragmentu)
         onView(withId(R.id.search_button)).check(matches(isCompletelyDisplayed()))
     }
     /**
      * Scenario 2
      * Ovaj scenario testira da li aplikacija ispravno pamti koja je zadnja igra otvorena u portrait orijentaciji,
      * tj. da li otvara posljednju otvorenu igricu klikom na details menu item
+     * Takodjer se testira da li je details dugme disabled na samom otvaranju aplikacije, i da li je enabled kada se vratimo iz gamedetailfragmenta
      */
     @Test
     fun testScenario2(){
-
         onView(withId(R.id.gameDetailsItem)).check(matches(isNotEnabled()))
-        //onView(withId(R.id.bottom_nav)).perform(NavigationViewActions.navigateTo(R.id.gameDetailsItem)).check(matches(isDisplayed()))
         onView(withId(R.id.game_list)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
         onView(withId(R.id.item_title_textview)).check(matches(withText(getAll()[0].title)))
         onView(withId(R.id.homeItem)).perform(click())
@@ -92,22 +93,38 @@ class OwnEspressoTests {
      * Scenario 3
      * Ovaj scenario otvara aplikaciju u landscape orijentaciji
      * Testira da li je prva otvorena igra prva iz liste igri tj. Fifa 23
-     * Zatim sa vise klikova na elemente recycler view liste testira da li se odgovarajuce igrice otvaraju ispravno
-     * Zatim se vraca na portrait i testira da li su neke funkcionalnosti ok
+     * Vrsi se scroll recycler viewa i testira da li se klikom na petu igru otvara peta igra
+     * Zatim se vraca na portrait i testira da li je i dalje sve ok
      */
     @Test
     fun testScenario3(){
+        val games : List<Game> = getAll()
         //promjena orijentacije aplikacije u LANDSCAPE
         homeRule.scenario.onActivity{ activity ->
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
-        val games : List<Game> = getAll()
         //provjera da li se otvori igrica Fifa 23
         onView(withIndex(withId(R.id.item_title_textview),0) as Matcher<View>?).check(matches(withText(games[0].title)))
-        //klik na zadnji element recycler view-a
+        //klik na drugi element recycler view-a
         onView(withId(R.id.game_list)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click()))
-        //provjera da li je otvorena igrica koja se nalazi na zadnjem mjestu recycler view-a
+        //provjera da li je otvorena igrica koja se nalazi na drugom mjestu recycler view-a
         onView(withIndex(withId(R.id.item_title_textview),0) as Matcher<View>?).check(matches(withText(games[1].title)))
-
+        //scroll do zadnjeg elementa recycler view-a
+        onView(withId(R.id.game_list)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(games.size-1))
+        //klik na zadnji element recycler view-a
+        onView(withId(R.id.game_list)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(5, click()))
+        //provjera da li je otvorena igrica koja se nalazi na zadnjem mjestu recycler view-a
+        onView(withIndex(withId(R.id.item_title_textview),0) as Matcher<View>?).check(matches(withText(games[5].title)))
+        //promjena orijentacije na portrait mode
+        homeRule.scenario.onActivity { activity ->
+            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+        //da li se vidi menu item tj. da li je pravilno vracen portrait mode
+        onView(withIndex(withId(R.id.homeItem),0) as Matcher<View>?).check(matches(
+            isCompletelyDisplayed()
+        ))
+        //ponovna provjera kao u testu 1 da se uvjerimo da sve radi kao prije nakon vracanja iz landscape orijentacije
+        onView(withId(R.id.game_list)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(3, click()))
+        onView(withId(R.id.item_title_textview)).check(matches(withText(getAll()[3].title)))
+        }
     }
-}
