@@ -1,6 +1,5 @@
-package com.example.spirala
+package ba.etf.rma23.projekat
 
-import android.media.Rating
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +7,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spirala.R
 
 class ReviewListAdapter( private var reviews:List<UserImpression>):RecyclerView.Adapter<ReviewListAdapter.ReviewHolder>(){
     inner class ReviewHolder(itemView : View):RecyclerView.ViewHolder(itemView){

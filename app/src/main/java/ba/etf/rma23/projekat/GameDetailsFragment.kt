@@ -1,4 +1,4 @@
-package com.example.spirala
+package ba.etf.rma23.projekat
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -12,8 +12,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spirala.GameData.Companion.getAll
-import com.example.spirala.GameData.Companion.getDetails
+import ba.etf.rma23.projekat.GameData
+import ba.etf.rma23.projekat.GameData.Companion.getAll
+import ba.etf.rma23.projekat.GameData.Companion.getDetails
+import ba.etf.rma23.projekat.GameDetailsFragmentArgs
+import ba.etf.rma23.projekat.GameDetailsFragmentDirections
+import com.example.spirala.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class GameDetailsFragment : Fragment(){
@@ -56,7 +60,7 @@ class GameDetailsFragment : Fragment(){
             bottomNav.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.homeItem -> {
-                        val action = GameDetailsFragmentDirections.actionGameDetailsFragmentToHomeFragment(game.title)
+                        val action = GameDetailsFragmentDirections.toHome(game.title)
                         findNavController().navigate(action)
                         true
                     }
@@ -73,14 +77,14 @@ class GameDetailsFragment : Fragment(){
     private fun fillDetails(){
         title.text=game.title
         platform.text=game.platform
-        release_date.text=game.releaseDate
+        release_date.text=game.release_date
         esrb.text=game.esrbRating
         developer.text=game.developer
         publisher.text=game.publisher
         genre.text=game.genre
-        description.text=game.description
+        description.text=game.summary
         val id : Int = cover.context.resources.getIdentifier(
-            game.coverImage,"drawable",cover.context.packageName)
+            game.cover,"drawable",cover.context.packageName)
         cover.setImageResource(id)
     }
 

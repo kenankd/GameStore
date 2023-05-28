@@ -1,4 +1,4 @@
-package com.example.spirala
+package ba.etf.rma23.projekat
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -8,11 +8,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spirala.GameData.Companion.getAll
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import ba.etf.rma23.projekat.GameData.Companion.getAll
+import ba.etf.rma23.projekat.GameDetailsFragmentDirections
+import ba.etf.rma23.projekat.HomeFragmentArgs
+import ba.etf.rma23.projekat.HomeFragmentDirections
+import com.example.spirala.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment: Fragment() {
@@ -31,7 +35,7 @@ class HomeFragment: Fragment() {
             bottomNav.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.gameDetailsItem -> {
-                        findNavController().navigate(HomeFragmentDirections.toDetails(args.title!!))
+                        findNavController().navigate(HomeFragmentDirections.toDetails2(args.title!!))
                         true
                     }
                     else -> true
@@ -47,9 +51,11 @@ class HomeFragment: Fragment() {
         return view
     }
     private fun showGame(game:Game){
-        requireView().findNavController().navigate(HomeFragmentDirections.toDetails(game.title))
+        requireView().findNavController().navigate(HomeFragmentDirections.toDetails2(game.title))
     }
     private fun showGameLand(game:Game){
-        (requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment).navController.navigate(GameDetailsFragmentDirections.toDetails(game.title))
+        (requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment).navController.navigate(
+            GameDetailsFragmentDirections.toDetails2(game.title))
     }
+
 }

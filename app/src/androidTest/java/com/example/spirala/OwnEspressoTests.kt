@@ -10,7 +10,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.example.spirala.GameData.Companion.getAll
+import ba.etf.rma23.projekat.Game
+import ba.etf.rma23.projekat.GameData.Companion.getAll
+import ba.etf.rma23.projekat.HomeActivity
+
+
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher

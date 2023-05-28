@@ -1,10 +1,11 @@
-package com.example.spirala
+package ba.etf.rma23.projekat
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spirala.R
 
 class GameListAdapter(private var games:List<Game>,private val GameClicked : (game : Game )-> Unit): RecyclerView.Adapter<GameListAdapter.GameHolder>(){
     inner class GameHolder(itemView : View):RecyclerView.ViewHolder(itemView){
@@ -24,7 +25,7 @@ class GameListAdapter(private var games:List<Game>,private val GameClicked : (ga
     override fun onBindViewHolder(holder: GameHolder, position: Int) {
         holder.title.text=games[position].title
         holder.rating.text=games[position].rating.toString()
-        holder.date.text=games[position].releaseDate
+        holder.date.text=games[position].release_date
         holder.platform.text=games[position].platform
         holder.itemView.setOnClickListener{
             GameClicked(games[position])
