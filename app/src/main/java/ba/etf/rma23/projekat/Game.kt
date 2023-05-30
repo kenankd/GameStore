@@ -39,7 +39,7 @@ class GameDeserializer : JsonDeserializer<Game> {
         val platforms = jsonObject.getAsJsonArray("platforms")?.get(0)?.asJsonObject?.get("name")?.asString ?: ""
         var esrbRating : String = "unknown"
         var ageRating : Double = 0.0
-        val firstReleaseDate = jsonObject.getAsJsonArray("release_dates")?.get(0)?.asJsonObject?.get("y")?.asString ?: ""
+        val firstReleaseDate = jsonObject.getAsJsonArray("release_dates")?.get(0)?.asJsonObject?.get("human")?.asString ?: ""
         val ageRatingsArray = jsonObject.getAsJsonArray("age_ratings")
         if(ageRatingsArray!=null && ageRatingsArray.size()>0){
             for(element in ageRatingsArray){
@@ -60,7 +60,7 @@ class GameDeserializer : JsonDeserializer<Game> {
         }
         val coverUrl = jsonObject.get("cover")?.asJsonObject?.get("url")?.toString() ?: ""
         val developer = jsonObject.getAsJsonArray("involved_companies")?.get(0)?.asJsonObject?.get("company")?.asJsonObject?.get("name")?.asString ?: ""
-        val publisher = developer //jsonObject?.getAsJsonArray("involved_companies")?.get(0)?.asJsonObject?.get("company")?.asJsonObject?.get("name")?.asString ?: ""
+        val publisher = developer
         val genres = jsonObject.getAsJsonArray("genres")?.get(0)?.asJsonObject?.get("name")?.asString ?: ""
         val summary = jsonObject.get("summary")?.asString ?: ""
         val userImpressions = emptyList<UserImpression>()

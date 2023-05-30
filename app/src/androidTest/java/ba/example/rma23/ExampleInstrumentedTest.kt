@@ -1,4 +1,4 @@
-package com.example.spirala
+package ba.example.rma23
 
 
 import android.view.View
@@ -15,6 +15,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ba.etf.rma23.projekat.GameData
 import ba.etf.rma23.projekat.MainActivity
+import com.example.spirala.R
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.`is` as Is

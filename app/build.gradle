@@ -7,14 +7,12 @@ plugins {
 android {
     namespace 'com.example.spirala'
     compileSdk 33
-
     defaultConfig {
         applicationId "com.example.spirala"
         minSdk 29
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

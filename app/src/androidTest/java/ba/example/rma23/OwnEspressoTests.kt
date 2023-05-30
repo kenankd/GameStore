@@ -1,4 +1,4 @@
-package com.example.spirala
+package ba.example.rma23
 
 import android.content.pm.ActivityInfo
 import android.view.View
@@ -13,6 +13,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ba.etf.rma23.projekat.Game
 import ba.etf.rma23.projekat.GameData.Companion.getAll
 import ba.etf.rma23.projekat.MainActivity
+import com.example.spirala.R
 
 
 import org.hamcrest.Description

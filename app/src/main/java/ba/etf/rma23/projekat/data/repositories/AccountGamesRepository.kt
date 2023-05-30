@@ -48,9 +48,9 @@ object AccountGamesRepository {
             val games = getSavedGames()
             AccountAPIConfig.retrofit.removeGame(id)
             for(game in games){
-                if(game.id == id) return@withContext true
+                if(game.id == id) return@withContext false
             }
-            return@withContext false
+            return@withContext true
         }
     }
     suspend fun getSavedGames() : List<Game>{
@@ -67,6 +67,7 @@ object AccountGamesRepository {
             return@withContext games
         }
     }
+
     suspend fun getGamesContainingString(query: String) : List<Game>{
         return withContext(Dispatchers.IO){
             val savedGames = AccountAPIConfig.retrofit.getSavedGames().body()
