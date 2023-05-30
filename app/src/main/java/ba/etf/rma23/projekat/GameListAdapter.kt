@@ -25,7 +25,7 @@ class GameListAdapter(private var games:List<Game>,private val GameClicked : (ga
     override fun onBindViewHolder(holder: GameHolder, position: Int) {
         holder.title.text=games[position].title
         holder.rating.text=games[position].rating.toString()
-        holder.date.text=games[position].release_date
+        holder.date.text=games[position].releaseDate
         holder.platform.text=games[position].platform
         holder.itemView.setOnClickListener{
             GameClicked(games[position])

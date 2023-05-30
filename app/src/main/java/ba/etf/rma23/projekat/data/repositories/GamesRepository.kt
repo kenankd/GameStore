@@ -1,6 +1,7 @@
 package ba.etf.rma23.projekat.data.repositories
 
 import ba.etf.rma23.projekat.Game
+import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.getGames
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -16,11 +17,21 @@ object GamesRepository {
     }
     suspend fun getGamesByName(name: String) : List<Game>?{
         return withContext(Dispatchers.IO){
-            val response = IGDBApiConfig.retrofit.getGamesByName(
-                "dfui4ski9ctfq9pxvaktgsstb61fdz",
-                "Bearer 1nnymjagwtq9mum6481xr13g1g1pi6", name= name)
+            val response = IGDBApiConfig.retrofit.getGamesByName(name= name)
             return@withContext response.body()
         }
+    }
+    suspend fun getGamesSafe(name: String) : List<Game>?{
+        return withContext(Dispatchers.IO){
+            val body = "where age_ratings.category = 1 &  age_ratings.rating!=(11,12); search \"Hitman\";"
+            val response = IGDBApiConfig.retrofit.getGamesSafe( body = body.toRequestBody("text/plain".toMediaTypeOrNull())
+            )
+            return@withContext response.body()
+        }
+    }
+    fun sortGames():List<Game>{
+        val games = getGames()
+        return games
     }
     suspend fun getGameById(id : Long) : Game?{
         return withContext(Dispatchers.IO){

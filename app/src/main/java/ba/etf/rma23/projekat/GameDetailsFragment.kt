@@ -77,7 +77,7 @@ class GameDetailsFragment : Fragment(){
     private fun fillDetails(){
         title.text=game.title
         platform.text=game.platform
-        release_date.text=game.release_date
+        release_date.text=game.releaseDate
         esrb.text=game.esrbRating
         developer.text=game.developer
         publisher.text=game.publisher

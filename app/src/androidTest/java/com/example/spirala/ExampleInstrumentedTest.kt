@@ -13,6 +13,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import ba.etf.rma23.projekat.GameData
+import ba.etf.rma23.projekat.MainActivity
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.`is` as Is
@@ -39,7 +41,7 @@ class TestLayout {
     }
 
     @get:Rule
-    var homeRule:ActivityScenarioRule<HomeActivity> = ActivityScenarioRule(HomeActivity::class.java)
+    var homeRule:ActivityScenarioRule<MainActivity> = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun elementsTest(){
@@ -88,7 +90,7 @@ class TestLayout {
             hasDescendant(withText(prvaIgra.releaseDate)),
             hasDescendant(withText(prvaIgra.rating.toString()))
         ),click()))
-        onView(withText(prvaIgra.description)).check(matches(isCompletelyDisplayed()))
+        onView(withText(prvaIgra.summary)).check(matches(isCompletelyDisplayed()))
         onView(instanceOf(RecyclerView::class.java)).check(hasItemCount(prvaIgra.userImpressions.size))
     }
     @Test
@@ -99,6 +101,6 @@ class TestLayout {
             hasDescendant(withText(prvaIgra.releaseDate)),
             hasDescendant(withText(prvaIgra.rating.toString()))
         ),click()))
-        onView(withText(prvaIgra.description)).check(matches(isCompletelyDisplayed()))
+        onView(withText(prvaIgra.summary)).check(matches(isCompletelyDisplayed()))
     }
 }

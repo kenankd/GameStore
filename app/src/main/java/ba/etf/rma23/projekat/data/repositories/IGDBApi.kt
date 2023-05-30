@@ -10,16 +10,15 @@ interface IGDBApi {
     suspend fun getToken(@Query("client_id") client_id : String,@Query("client_secret") client_secret : String,@Query("grant_type") grant_type : String)
     : Response<TokenData>
     @POST("games")
-    suspend fun getGamesByName(@Header("Client-ID") client_id : String,
-                               @Header("Authorization") authorization : String,
+    suspend fun getGamesByName(@Header("Client-ID") client_id : String = "dfui4ski9ctfq9pxvaktgsstb61fdz",
+                               @Header("Authorization") authorization : String = "Bearer 1nnymjagwtq9mum6481xr13g1g1pi6",
                                @Query("fields") fields: String = "id,name,platforms.name,genres.name,involved_companies.company.name,age_ratings.category,age_ratings.rating,release_dates.y,cover.url,summary",
                                @Query("search") name : String): Response<List<Game>>
     @POST("games")
-    suspend fun getGamesSafe(@Header("Client-ID") client_id : String,
-                             @Header("Authorization") authorization : String,
+    suspend fun getGamesSafe(@Header("Client-ID") client_id : String= "dfui4ski9ctfq9pxvaktgsstb61fdz",
+                             @Header("Authorization") authorization : String= "Bearer 1nnymjagwtq9mum6481xr13g1g1pi6",
                              @Query("fields") fields: String = "id,name,platforms.name,genres.name,involved_companies.company.name,age_ratings.category,age_ratings.rating,release_dates.y,cover.url,summary",
-                             @Query("search") name : String,
-                             @Body body : String = "where age_ratings.category = 1; where age_ratings.rating!=12;"): Response<List<Game>>
+                             @Body body : RequestBody): Response<List<Game>>
 
     @POST("games")
     suspend fun getGameById(@Header("Client-ID") client_id : String,

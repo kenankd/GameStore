@@ -14,10 +14,10 @@ import java.lang.reflect.Type
 import java.net.URL
 
 data class Game(
-    val id: Long,
+    val id: Int,
     @SerializedName("name") val title: String,
     @SerializedName("platforms") val platform: String,
-    @SerializedName("release_dates") val release_date: String,
+    @SerializedName("release_dates") val releaseDate: String,
     @SerializedName("age_ratings.rating") val rating: Double,
     val cover: String,
     @SerializedName("age_ratings.rating") val esrbRating: String,
@@ -28,12 +28,13 @@ data class Game(
     val userImpressions: List<UserImpression>,
 )
 class GameDeserializer : JsonDeserializer<Game> {
+    @SuppressLint("SuspiciousIndentation")
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): Game {
         val jsonObject = if(json is JsonArray)
             json.get(0)?.asJsonObject!!
         else
             json?.asJsonObject!!
-        val id = jsonObject.get("id")?.asLong ?: 0L
+        val id = jsonObject.get("id")?.asInt ?: 0
         val name = jsonObject.get("name")?.asString ?: ""
         val platforms = jsonObject.getAsJsonArray("platforms")?.get(0)?.asJsonObject?.get("name")?.asString ?: ""
         var esrbRating : String = "unknown"
@@ -45,14 +46,14 @@ class GameDeserializer : JsonDeserializer<Game> {
                 if(ageRating == 0.0)
                 ageRating = element.asJsonObject.get("rating").asDouble
                 val objekat = element.asJsonObject.get("category").asInt ;
-                if( objekat == 0){
+                if( objekat == 1){
                     esrbRating = ESRB[ageRating.toInt()].toString()
                 }
             }
             if(esrbRating == "unknown"){
                 for(element in ageRatingsArray){
                     val objekat = element.asJsonObject.get("category").asInt ;
-                    if( objekat == 1)
+                    if( objekat == 2)
                         esrbRating = ESRB[element.asJsonObject.get("rating").asInt].toString()
                 }
             }

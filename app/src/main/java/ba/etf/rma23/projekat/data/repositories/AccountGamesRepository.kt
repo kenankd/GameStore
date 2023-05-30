@@ -13,7 +13,7 @@ import retrofit2.HttpException
 object AccountGamesRepository {
         var acHash: String? = null
         var age: Int? = null
-        lateinit var favoriteGames : List<Game>
+        lateinit var favoriteGames : MutableList<Game>
     fun setHash(acHash:String):Boolean{
         this.acHash=acHash
         return true
@@ -26,9 +26,9 @@ object AccountGamesRepository {
         return age in 3..100
     }
     fun setGames(games : List<Game>){
-        this.favoriteGames=games
+        this.favoriteGames= games as MutableList<Game>
     }
-    fun getGames() : List<Game>{
+    fun getGames() : MutableList<Game>{
         return favoriteGames
     }
     suspend fun saveGame(game : Game) : Game{
@@ -45,14 +45,12 @@ object AccountGamesRepository {
     }
     suspend fun removeGame(id: Int):Boolean {
         return withContext(Dispatchers.IO){
-            //treba mijenjati try catch ne baca nikad izuzetak
-            try{
-                AccountAPIConfig.retrofit.removeGame(id)
+            val games = getSavedGames()
+            AccountAPIConfig.retrofit.removeGame(id)
+            for(game in games){
+                if(game.id == id) return@withContext true
             }
-            catch(e : Exception){
-                return@withContext false
-            }
-            return@withContext true
+            return@withContext false
         }
     }
     suspend fun getSavedGames() : List<Game>{
@@ -72,7 +70,7 @@ object AccountGamesRepository {
     suspend fun getGamesContainingString(query: String) : List<Game>{
         return withContext(Dispatchers.IO){
             val savedGames = AccountAPIConfig.retrofit.getSavedGames().body()
-            var games = mutableListOf<Game>()
+            val games = mutableListOf<Game>()
             if(savedGames == null)
                 return@withContext listOf()
             else {
@@ -87,8 +85,16 @@ object AccountGamesRepository {
     }
     suspend fun removeNonSafe() : Boolean {
         return withContext(Dispatchers.IO){
-            val games = getSavedGames()
-
+            val games = getGames()
+            var br = 0
+            for( i in 0 until games.size){
+                if(games[i].esrbRating == "AO"){
+                    games.removeAt(i)
+                    br += 1
+                }
+            }
+            setGames(games)
+            return@withContext br>0
         }
     }
 
