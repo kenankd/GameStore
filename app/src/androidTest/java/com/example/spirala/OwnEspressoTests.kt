@@ -12,7 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ba.etf.rma23.projekat.Game
 import ba.etf.rma23.projekat.GameData.Companion.getAll
-import ba.etf.rma23.projekat.HomeActivity
+import ba.etf.rma23.projekat.MainActivity
 
 
 import org.hamcrest.Description
@@ -27,7 +27,7 @@ import org.junit.runners.JUnit4
 class OwnEspressoTests {
     //otvaranje aktivnosti
     @get:Rule
-    var homeRule:ActivityScenarioRule<HomeActivity> = ActivityScenarioRule(HomeActivity::class.java)
+    var homeRule:ActivityScenarioRule<MainActivity> = ActivityScenarioRule(MainActivity::class.java)
     //custom matcher koji sam dodao zbog errora vise viewova u hijerarhiji u testu 3
     private fun withIndex(matcher: Matcher<View?>, index: Int): Any {
         return object : TypeSafeMatcher<View>() {

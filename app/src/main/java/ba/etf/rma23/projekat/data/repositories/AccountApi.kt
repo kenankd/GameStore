@@ -9,12 +9,13 @@ import retrofit2.http.*
 
 interface AccountApi {
 
-    @POST("{aid}/game")
+    @POST("account/{aid}/game")
     suspend fun saveGame(@Path("aid") aid: String = getHash()!!, @Body game: RequestBody)
 
-    @DELETE("{aid}/game/{gid}/")
+    @DELETE("account/{aid}/game/{gid}/")
     suspend fun removeGame(@Path("gid") gid : Int,@Path("aid") aid: String = getHash()!!)
 
-    @GET("{aid}/games")
+    @GET("account/{aid}/games")
     suspend fun getSavedGames(@Path("aid") aid: String = getHash()!!) : Response<List<SavedGame>>
+
 }

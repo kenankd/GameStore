@@ -1,6 +1,7 @@
 package ba.etf.rma23.projekat.data.repositories
 
 import ba.etf.rma23.projekat.Game
+import ba.etf.rma23.projekat.data.repositories.GamesRepository.getGameById
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -12,6 +13,7 @@ import retrofit2.HttpException
 object AccountGamesRepository {
         var acHash: String? = null
         var age: Int? = null
+        lateinit var favoriteGames : List<Game>
     fun setHash(acHash:String):Boolean{
         this.acHash=acHash
         return true
@@ -22,6 +24,12 @@ object AccountGamesRepository {
     fun setAge(age : Int) : Boolean{
         this.age = age
         return age in 3..100
+    }
+    fun setGames(games : List<Game>){
+        this.favoriteGames=games
+    }
+    fun getGames() : List<Game>{
+        return favoriteGames
     }
     suspend fun saveGame(game : Game) : Game{
         return withContext(Dispatchers.IO){
@@ -50,13 +58,38 @@ object AccountGamesRepository {
     suspend fun getSavedGames() : List<Game>{
         return withContext(Dispatchers.IO){
             val savedGames = AccountAPIConfig.retrofit.getSavedGames().body()
-            if(savedGames != null)
-                return@withContext listOf()
             var games = mutableListOf<Game>()
-            //zavrsiti treba pozvati getGamesByName ili napraviti metodu getGameById i zavrsiti
-            return@withContext listOf()
+            if(savedGames == null)
+                return@withContext listOf()
+            else {
+                for (element in savedGames) {
+                    games.add(getGameById(element.id)!!)
+                }
+            }
+            return@withContext games
         }
+    }
+    suspend fun getGamesContainingString(query: String) : List<Game>{
+        return withContext(Dispatchers.IO){
+            val savedGames = AccountAPIConfig.retrofit.getSavedGames().body()
+            var games = mutableListOf<Game>()
+            if(savedGames == null)
+                return@withContext listOf()
+            else {
+                for (element in savedGames) {
+                    if(element.title.contains(query, ignoreCase = true)){
+                        games.add(getGameById(element.id)!!)
+                    }
+                }
+            }
+            return@withContext games
+        }
+    }
+    suspend fun removeNonSafe() : Boolean {
+        return withContext(Dispatchers.IO){
+            val games = getSavedGames()
 
+        }
     }
 
 
