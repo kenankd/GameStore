@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import ba.etf.rma23.projekat.GameData.Companion.getAll
+import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.setAge
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.setHash
 import ba.etf.rma23.projekat.data.repositories.GamesRepository.getGamesByName
 import ba.etf.rma23.projekat.data.repositories.GamesRepository.getGamesSafe
@@ -35,11 +36,10 @@ class MainActivity : AppCompatActivity() {
             navView.setupWithNavController(navController)
         }
         setHash("417fe823-f22d-41a3-b7bb-14e4d5fcfd83")
+        setAge(19)
         CoroutineScope(Job() + Dispatchers.Main).launch{
-            val games = getGamesSafe("Hitman")
-            val a = games?.size
+            val games = getGamesByName("hitman")
         }
-
 
     }
 

@@ -25,6 +25,9 @@ object AccountGamesRepository {
         this.age = age
         return age in 3..100
     }
+    fun getUserAge() : Int?{
+        return this.age
+    }
     fun setGames(games : List<Game>){
         this.favoriteGames= games as MutableList<Game>
     }

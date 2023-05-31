@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ba.etf.rma23.projekat.data.repositories.GamesRepository
 import com.example.spirala.R
 
 class GameListAdapter(private var games:List<Game>,private val GameClicked : (game : Game )-> Unit): RecyclerView.Adapter<GameListAdapter.GameHolder>(){
@@ -33,6 +34,7 @@ class GameListAdapter(private var games:List<Game>,private val GameClicked : (ga
     }
     fun setGames(games : List<Game>){
         this.games=games
+        GamesRepository.setGames(games)
         notifyDataSetChanged()
     }
 }

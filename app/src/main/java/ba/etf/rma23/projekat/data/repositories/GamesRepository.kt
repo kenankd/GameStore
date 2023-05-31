@@ -23,7 +23,7 @@ object GamesRepository {
             return@withContext response.body()
         }
     }
-    suspend fun getGamesByName(name: String) : List<Game>?{
+     suspend fun getGamesByName(name: String) : List<Game>?{
         return withContext(Dispatchers.IO){
             val response = IGDBApiConfig.retrofit.getGamesByName(name= name)
             if(response.body() == null) return@withContext listOf()
@@ -41,24 +41,19 @@ object GamesRepository {
             return@withContext response.body()
         }
     }
+
     suspend fun sortGames():List<Game>{
         val savedGames = getSavedGames()
         var games = getGames()
         games = games.sortedWith(compareByDescending<Game>{
-            for(game in savedGames){
-                if(game.id==it.id) return@compareByDescending true
-            }
+            for(game in savedGames)
+                if(game.id==it.id)
+                    return@compareByDescending true
             return@compareByDescending false
         }.thenBy(Game::id))
         return games
     }
-    suspend fun compareBySaved(game : Game) : Boolean{
-        val games = getSavedGames()
-        for(savedGame in games){
-            if (game.id == savedGame.id) return true
-        }
-        return false
-    }
+
     suspend fun getGameById(id : Long) : Game?{
         return withContext(Dispatchers.IO){
             val body = "fields id,name,platforms.name,genres.name,involved_companies.company.name,age_ratings.category,age_ratings.rating,release_dates.human,cover.url,summary;" +
