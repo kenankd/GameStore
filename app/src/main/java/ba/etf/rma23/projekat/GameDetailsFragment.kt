@@ -2,12 +2,14 @@ package ba.etf.rma23.projekat
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,8 +19,12 @@ import ba.etf.rma23.projekat.GameData.Companion.getAll
 import ba.etf.rma23.projekat.GameData.Companion.getDetails
 import ba.etf.rma23.projekat.GameDetailsFragmentArgs
 import ba.etf.rma23.projekat.GameDetailsFragmentDirections
+import ba.etf.rma23.projekat.data.repositories.GamesRepository.getGameById
 import com.example.spirala.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.*
 
 class GameDetailsFragment : Fragment(){
     private lateinit var game: Game
@@ -56,20 +62,23 @@ class GameDetailsFragment : Fragment(){
         else {
             val bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
             bottomNav.menu.getItem(0).isEnabled=true
-            game = getDetails(args.title)!!
+            val id = arguments!!.getInt("id")
+            game = Gson().fromJson(arguments?.getString("game"), Game::class.java)
             bottomNav.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.homeItem -> {
-                        val action = GameDetailsFragmentDirections.toHome(game.title)
-                        findNavController().navigate(action)
+                        val bundle = Bundle().apply {
+                            putString("game", Gson().toJson(game))
+                        }
+                        requireView().findNavController().navigate(R.id.homeItem,bundle)
                         true
                     }
                     else -> true
                 } }
         }
         fillDetails()
-        val list : List<UserImpression> = GameData.getDetails(title.text as String)!!.userImpressions.sortedByDescending { userImpression -> userImpression.timestamp }
-        reviewAdapter.setReviews(list)
+        //val list : List<UserImpression> = GameData.getDetails(title.text as String)!!.userImpressions.sortedByDescending { userImpression -> userImpression.timestamp }
+        reviewAdapter.setReviews(listOf())
         reviewList.adapter=reviewAdapter
         reviewList.layoutManager= LinearLayoutManager(activity, LinearLayoutManager.VERTICAL,false)
         return view
@@ -83,9 +92,9 @@ class GameDetailsFragment : Fragment(){
         publisher.text=game.publisher
         genre.text=game.genre
         description.text=game.summary
-        val id : Int = cover.context.resources.getIdentifier(
-            game.cover,"drawable",cover.context.packageName)
-        cover.setImageResource(id)
+        Picasso.get().load("https:" + game.cover.substring(1,game.cover.length-1)).centerCrop().resize(550,500).into(cover)
+        cover.scaleType = ImageView.ScaleType.CENTER_INSIDE
     }
+
 
 }

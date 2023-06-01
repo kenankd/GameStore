@@ -50,11 +50,11 @@ object GamesRepository {
                 if(game.id==it.id)
                     return@compareByDescending true
             return@compareByDescending false
-        }.thenBy(Game::id))
+        }.thenBy(Game::title))
         return games
     }
 
-    suspend fun getGameById(id : Long) : Game?{
+    suspend fun getGameById(id : Int) : Game?{
         return withContext(Dispatchers.IO){
             val body = "fields id,name,platforms.name,genres.name,involved_companies.company.name,age_ratings.category,age_ratings.rating,release_dates.human,cover.url,summary;" +
                     " where id = " + id + ";"

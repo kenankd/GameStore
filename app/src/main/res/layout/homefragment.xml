@@ -63,4 +63,15 @@
         app:layout_constraintTop_toBottomOf="@+id/layout2"
         app:layout_constraintVertical_bias="0.218" />
 
+    <Switch
+        android:id="@+id/favoritesSwitch"
+        android:layout_width="222dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:text="SEARCH FAVORITES ONLY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sortSwitch"
+        app:layout_constraintTop_toBottomOf="@+id/layout2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

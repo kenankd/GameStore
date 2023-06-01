@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -51,4 +52,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:+'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
     testImplementation 'org.json:json:20140107'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

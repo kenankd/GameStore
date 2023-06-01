@@ -1,6 +1,8 @@
 package ba.etf.rma23.projekat
 
 import android.annotation.SuppressLint
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import ba.etf.rma23.projekat.UserImpression
 import com.google.gson.JsonArray
@@ -10,9 +12,9 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
+import kotlinx.parcelize.Parcelize
 import java.lang.reflect.Type
 import java.net.URL
-
 data class Game(
     val id: Int,
     @SerializedName("name") val title: String,
@@ -20,12 +22,12 @@ data class Game(
     @SerializedName("release_dates") val releaseDate: String,
     @SerializedName("age_ratings.rating") val rating: Double,
     val cover: String,
-    @SerializedName("age_ratings.rating") val esrbRating: String,
-    @SerializedName("involved_companies.name") val developer: String,
+    @SerializedName("age_ratings") val esrbRating: String,
+    @SerializedName("involved_companies") val developer: String,
     @SerializedName("involved_companies.name") val publisher: String,
     @SerializedName("genre") val genre: String,
     val summary: String,
-    val userImpressions: List<UserImpression>,
+    val userImpressions: List<UserImpression>
 )
 class GameDeserializer : JsonDeserializer<Game> {
     @SuppressLint("SuspiciousIndentation")
@@ -44,7 +46,7 @@ class GameDeserializer : JsonDeserializer<Game> {
         if(ageRatingsArray!=null && ageRatingsArray.size()>0){
             for(element in ageRatingsArray){
                 if(ageRating == 0.0)
-                ageRating = element.asJsonObject.get("rating").asDouble
+                    ageRating = element.asJsonObject.get("rating").asDouble
                 val objekat = element.asJsonObject.get("category").asInt ;
                 if( objekat == 1){
                     esrbRating = ESRB[ageRating.toInt()].toString()
