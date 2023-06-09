@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/gray"
-    tools:context=".HomeActivity">
+    tools:context="ba.etf.rma23.projekat.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView1"
@@ -19,7 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintWidth_percent="0.5"
         tools:layout="@layout/homefragment"
-        app:navGraph="@navigation/navgraph"
+        app:navGraph="@navigation/navgraphhome"
         />
 
     <androidx.fragment.app.FragmentContainerView
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintWidth_percent="0.5"
-        app:navGraph="@navigation/navgraph"
+        app:navGraph="@navigation/navgraph1"
         app:defaultNavHost="true"
         />
 

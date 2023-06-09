@@ -2,8 +2,7 @@ package ba.etf.rma23.projekat.data.repositories
 
 import ba.etf.rma23.projekat.Game
 import ba.etf.rma23.projekat.data.repositories.GamesRepository.getGameById
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -41,6 +40,7 @@ object AccountGamesRepository {
             gameJsonObject.put("igdb_id",game.id)
             gameJsonObject.put("name",game.title)
             jsonObject.put("game",gameJsonObject)
+            print(jsonObject.toString())
             val mediaType = "application/json".toMediaTypeOrNull()
             AccountAPIConfig.retrofit.saveGame(game = jsonObject.toString().toRequestBody(mediaType))
             return@withContext game
@@ -51,9 +51,9 @@ object AccountGamesRepository {
             val games = getSavedGames()
             AccountAPIConfig.retrofit.removeGame(id)
             for(game in games){
-                if(game.id == id) return@withContext false
+                if(game.id == id) return@withContext true
             }
-            return@withContext true
+            return@withContext false
         }
     }
     suspend fun getSavedGames() : List<Game>{
@@ -89,17 +89,23 @@ object AccountGamesRepository {
     }
     suspend fun removeNonSafe() : Boolean {
         return withContext(Dispatchers.IO){
-            val games = getGames()
+            val games = getSavedGames()
+            if(games.isEmpty()) return@withContext false
             var br = 0
-            for( i in 0 until games.size){
-                if(games[i].esrbRating == "AO"){
-                    games.removeAt(i)
-                    br += 1
+            for(i in games.indices){
+                if(games[i].esrbRating == "AO" || games[i].esrbRating == "M"){
+                    val deleted = removeGame(games[i].id)
                 }
             }
             setGames(games)
-            return@withContext br>0
+            return@withContext true
         }
+    }
+    suspend fun isGameSaved(id:Int):Boolean{
+        val games = getSavedGames()
+        for(game in games)
+            if(game.id==id) return true
+        return false
     }
 
 

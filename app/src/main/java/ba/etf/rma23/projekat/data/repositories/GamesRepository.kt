@@ -51,6 +51,7 @@ object GamesRepository {
                     return@compareByDescending true
             return@compareByDescending false
         }.thenBy(Game::title))
+        setGames(games)
         return games
     }
 
@@ -59,8 +60,7 @@ object GamesRepository {
             val body = "fields id,name,platforms.name,genres.name,involved_companies.company.name,age_ratings.category,age_ratings.rating,release_dates.human,cover.url,summary;" +
                     " where id = " + id + ";"
             val response = IGDBApiConfig.retrofit.getGameById("dfui4ski9ctfq9pxvaktgsstb61fdz",
-            "Bearer 1nnymjagwtq9mum6481xr13g1g1pi6",body.toRequestBody("text/plain".toMediaTypeOrNull())
-                )
+            "Bearer 1nnymjagwtq9mum6481xr13g1g1pi6",body.toRequestBody("text/plain".toMediaTypeOrNull()))
             return@withContext response.body()
         }
     }

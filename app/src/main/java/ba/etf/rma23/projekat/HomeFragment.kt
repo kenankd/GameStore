@@ -46,12 +46,13 @@ class HomeFragment: Fragment() {
         gameList.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
         searchButton=view.findViewById(R.id.search_button)
         searchText=view.findViewById(R.id.search_query_edittext)
-        sortSwitch=view.findViewById(R.id.sortSwitch)
-        favoritesSwitch=view.findViewById(R.id.favoritesSwitch)
+
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            sortSwitch=view.findViewById(R.id.sortSwitch)
+            favoritesSwitch=view.findViewById(R.id.favoritesSwitch)
             val bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
             bottomNav.menu.getItem(0).isEnabled = false
-            bottomNav.menu.getItem(1).isEnabled = arguments!=null
+            bottomNav.menu.getItem(1).isEnabled = arguments?.containsKey("game") == true
             bottomNav.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.gameDetailsItem -> {
@@ -65,37 +66,40 @@ class HomeFragment: Fragment() {
                 }
             }
             gameListAdapter = GameListAdapter(listOf()) { game -> showGame(game) }
-            CoroutineScope(Job() + Dispatchers.Main).launch {
-                gameListAdapter.setGames(getSavedGames())
-            }
-        }
-        else{
-            gameListAdapter = GameListAdapter(getAll()){game -> showGameLand(game) }
-        }
-        searchButton.setOnClickListener {
-            if(getUserAge()!=null){
+            setSavedGames()
+            searchButton.setOnClickListener {
+                if(getUserAge()!=null){
                     CoroutineScope(Job() + Dispatchers.Main).launch{
                         if(favoritesSwitch.isChecked){
                             gameListAdapter.setGames(getGamesContainingString(searchText.text.toString()))
                             return@launch
                         }
+                        val games : List<Game> = if(getUserAge()!! >= 18)
+                            getGamesByName(searchText.text.toString())!!
+                        else
+                            getGamesSafe(searchText.text.toString())!!
+                        if(sortSwitch.isChecked)
+                            gameListAdapter.setGames(sortGames())
+                        else gameListAdapter.setGames(games)
+                    }
+                }
+            }
+        }
+        else{
+            gameListAdapter = GameListAdapter(listOf()){game -> showGameLand(game) }
+            setSavedGames()
+            searchButton.setOnClickListener {
+                if(getUserAge()!=null){
+                    CoroutineScope(Job() + Dispatchers.Main).launch{
                         if(getUserAge()!! >= 18)
                             gameListAdapter.setGames(getGamesByName(searchText.text.toString())!!)
                         else
                             gameListAdapter.setGames(getGamesSafe(searchText.text.toString())!!)
                     }
-            }
-        }
-        sortSwitch.setOnCheckedChangeListener{_,isChecked ->
-            if(isChecked){
-                CoroutineScope(Job() + Dispatchers.Main).launch {
-                    val games = sortGames()
-                    GamesRepository.setGames(games)
-                    gameListAdapter.setGames(games)
                 }
-
             }
         }
+
         gameList.adapter=gameListAdapter
         gameList.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
         return view
@@ -107,8 +111,16 @@ class HomeFragment: Fragment() {
         requireView().findNavController().navigate(R.id.gameDetailsItem,bundle)
     }
     private fun showGameLand(game:Game){
+        val bundle = Bundle().apply {
+            putString("game", Gson().toJson(game))
+        }
         (requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment).navController.navigate(
-            GameDetailsFragmentDirections.toDetails2(game.title))
+            R.id.gameDetailsItem,bundle)
+    }
+    private fun setSavedGames(){
+        CoroutineScope(Job() + Dispatchers.Main).launch {
+            gameListAdapter.setGames(getSavedGames())
+        }
     }
 
 }

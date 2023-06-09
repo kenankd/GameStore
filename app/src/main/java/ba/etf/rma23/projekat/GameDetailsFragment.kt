@@ -1,11 +1,13 @@
 package ba.etf.rma23.projekat
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -19,12 +21,17 @@ import ba.etf.rma23.projekat.GameData.Companion.getAll
 import ba.etf.rma23.projekat.GameData.Companion.getDetails
 import ba.etf.rma23.projekat.GameDetailsFragmentArgs
 import ba.etf.rma23.projekat.GameDetailsFragmentDirections
+import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.getSavedGames
+import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.isGameSaved
+import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.removeGame
+import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.saveGame
 import ba.etf.rma23.projekat.data.repositories.GamesRepository.getGameById
 import com.example.spirala.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
+import kotlin.properties.Delegates
 
 class GameDetailsFragment : Fragment(){
     private lateinit var game: Game
@@ -39,6 +46,9 @@ class GameDetailsFragment : Fragment(){
     private lateinit var description : TextView
     private lateinit var reviewList : RecyclerView
     private lateinit var reviewAdapter : ReviewListAdapter
+    private lateinit var saveButton : Button
+    private lateinit var removeButton : Button
+    private var gameSaved : Boolean = false
     private val args: GameDetailsFragmentArgs by navArgs()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
@@ -55,15 +65,39 @@ class GameDetailsFragment : Fragment(){
         reviewList=view.findViewById(R.id.review_list)
         reviewAdapter = ReviewListAdapter(mutableListOf())
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            game = if(arguments==null)
-                getAll()[0]
-            else getDetails(arguments!!.getString("title",""))!!
+            if(!arguments?.containsKey("game")!!){
+                runBlocking{
+                    game=getGameById(76239)!!
+                }
+            }
+            else game = Gson().fromJson(arguments?.getString("game"), Game::class.java)
         }
         else {
+            saveButton = view.findViewById(R.id.buttonSave)
+            removeButton = view.findViewById(R.id.buttonRemove)
             val bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
             bottomNav.menu.getItem(0).isEnabled=true
-            val id = arguments!!.getInt("id")
             game = Gson().fromJson(arguments?.getString("game"), Game::class.java)
+            runBlocking {
+                gameSaved = isGameSaved(game.id)
+            }
+
+            saveButton.isEnabled=!gameSaved
+            removeButton.isEnabled=gameSaved
+            saveButton.setOnClickListener{
+                CoroutineScope(Dispatchers.Main).launch{
+                    saveGame(game)
+                }
+                saveButton.isEnabled=false
+                removeButton.isEnabled=true
+            }
+            removeButton.setOnClickListener {
+                CoroutineScope(Dispatchers.Main).launch{
+                    removeGame(game.id)
+                }
+                saveButton.isEnabled=true
+                removeButton.isEnabled=false
+            }
             bottomNav.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.homeItem -> {
@@ -83,6 +117,7 @@ class GameDetailsFragment : Fragment(){
         reviewList.layoutManager= LinearLayoutManager(activity, LinearLayoutManager.VERTICAL,false)
         return view
     }
+    @SuppressLint("SuspiciousIndentation")
     private fun fillDetails(){
         title.text=game.title
         platform.text=game.platform
@@ -92,9 +127,11 @@ class GameDetailsFragment : Fragment(){
         publisher.text=game.publisher
         genre.text=game.genre
         description.text=game.summary
+        if(game.cover!="")
         Picasso.get().load("https:" + game.cover.substring(1,game.cover.length-1)).centerCrop().resize(550,500).into(cover)
         cover.scaleType = ImageView.ScaleType.CENTER_INSIDE
     }
+
 
 
 }

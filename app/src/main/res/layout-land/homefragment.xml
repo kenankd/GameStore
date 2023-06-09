@@ -13,18 +13,6 @@
         android:backgroundTint="@color/gray"
         >
 
-        <ImageView
-            android:id="@+id/logo_image"
-            android:layout_width="112dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:src="@drawable/logo"
-            app:layout_constraintBottom_toTopOf="@+id/game_list"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
         <LinearLayout
             android:id="@+id/layout2"
             android:layout_width="290dp"
@@ -33,9 +21,8 @@
             android:orientation="horizontal"
             android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/logo_image"
-            app:layout_constraintTop_toTopOf="parent"
-            >
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <EditText
                 android:id="@+id/search_query_edittext"
@@ -56,8 +43,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/game_list"
-            android:layout_width="410dp"
-            android:layout_height="549dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/layout2"
             android:layout_marginTop="7dp"
             app:layout_constraintBottom_toBottomOf="parent"
