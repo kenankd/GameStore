@@ -17,7 +17,7 @@ object GamesRepository {
     fun getGames(): List<Game>{
         return currentGames
     }
-    suspend fun getToken(client_id : String, client_secret : String, grant_type : String) : TokenData?{
+    suspend fun getTokenn(client_id : String, client_secret : String, grant_type : String) : TokenData?{
         return withContext(Dispatchers.IO){
             val response = IGDBApiConfig.retrofit.getToken(client_id,client_secret,grant_type)
             return@withContext response.body()
