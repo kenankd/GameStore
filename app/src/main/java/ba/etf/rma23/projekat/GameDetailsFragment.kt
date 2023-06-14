@@ -25,6 +25,7 @@ import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.getSavedGa
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.isGameSaved
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.removeGame
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.saveGame
+import ba.etf.rma23.projekat.data.repositories.GameReviewsRepository.getReviewsForGame
 import ba.etf.rma23.projekat.data.repositories.GamesRepository.getGameById
 import com.example.spirala.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -48,8 +49,8 @@ class GameDetailsFragment : Fragment(){
     private lateinit var reviewAdapter : ReviewListAdapter
     private lateinit var saveButton : Button
     private lateinit var removeButton : Button
+    private lateinit var writeReview : Button
     private var gameSaved : Boolean = false
-    private val args: GameDetailsFragmentArgs by navArgs()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
         val view = inflater.inflate(R.layout.gamedetailsfragment,container,false)
@@ -75,13 +76,13 @@ class GameDetailsFragment : Fragment(){
         else {
             saveButton = view.findViewById(R.id.buttonSave)
             removeButton = view.findViewById(R.id.buttonRemove)
+            writeReview=view.findViewById(R.id.writeReviewButton)
             val bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
             bottomNav.menu.getItem(0).isEnabled=true
             game = Gson().fromJson(arguments?.getString("game"), Game::class.java)
             runBlocking {
                 gameSaved = isGameSaved(game.id)
             }
-
             saveButton.isEnabled=!gameSaved
             removeButton.isEnabled=gameSaved
             saveButton.setOnClickListener{
@@ -108,11 +109,19 @@ class GameDetailsFragment : Fragment(){
                         true
                     }
                     else -> true
-                } }
+                }
+            }
+            writeReview.setOnClickListener{
+                val bundle = Bundle().apply{
+                    putInt("id",game.id)
+                }
+                findNavController().navigate(R.id.reviewItem,bundle)
+            }
         }
         fillDetails()
+        getReviews()
         //val list : List<UserImpression> = GameData.getDetails(title.text as String)!!.userImpressions.sortedByDescending { userImpression -> userImpression.timestamp }
-        reviewAdapter.setReviews(listOf())
+        //reviewAdapter.setReviews(listOf())
         reviewList.adapter=reviewAdapter
         reviewList.layoutManager= LinearLayoutManager(activity, LinearLayoutManager.VERTICAL,false)
         return view
@@ -130,6 +139,21 @@ class GameDetailsFragment : Fragment(){
         if(game.cover!="")
         Picasso.get().load("https:" + game.cover.substring(1,game.cover.length-1)).centerCrop().resize(550,500).into(cover)
         cover.scaleType = ImageView.ScaleType.CENTER_INSIDE
+    }
+    fun getReviews(){
+        CoroutineScope(Job() + Dispatchers.Main).launch{
+            var userImpressions = mutableListOf<UserImpression>()
+            val gameReviews = getReviewsForGame(game.id)
+            for(gameReview in gameReviews){
+                if(gameReview.rating==null && gameReview.review==null) continue;
+                else if(gameReview.rating!=null){
+                    userImpressions.add(UserRating("kenan",System.currentTimeMillis(), gameReview.rating!!.toDouble()))
+                }
+                else
+                    userImpressions.add(UserReview("kenan",System.currentTimeMillis(),gameReview.review!!))
+            }
+            reviewAdapter.setReviews(userImpressions)
+        }
     }
 
 

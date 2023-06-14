@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-@Entity
+@Entity(tableName = "GameReview")
 data class GameReview(
     @PrimaryKey @SerializedName("id") var id: Int,
     @ColumnInfo(name = "rating") @SerializedName("rating")  var rating: Int?,

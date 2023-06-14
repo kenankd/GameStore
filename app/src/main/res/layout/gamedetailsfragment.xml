@@ -1,215 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".GameDetailsActivity">
+    android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/review_list"
-        android:layout_width="wrap_content"
-        android:layout_height="194dp"
-        android:backgroundTint="@color/cardview_dark_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/item_title_textview"
-            android:layout_width="match_parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/review_list"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="TextView"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/cover_imageview"
-            android:layout_width="wrap_content"
-            android:layout_height="167dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            app:srcCompat="@drawable/ic_launcher_foreground" />
+            android:backgroundTint="@color/cardview_dark_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.048"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/writeReviewButton"
+            app:layout_constraintVertical_bias="0.072" />
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/linearLayout3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            tools:layout_gravity="center_horizontal">
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/item_title_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="TextView"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/cover_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="167dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <LinearLayout
-                android:layout_width="97dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                tools:layout_gravity="center_horizontal">
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="43dp"
-                    android:gravity="left|center"
-                    android:text="Platform" />
+                <LinearLayout
+                    android:layout_width="97dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:gravity="left|center"
-                    android:text="Release date" />
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:gravity="left|center"
+                        android:text="Platform" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:gravity="left|center"
-                    android:text="ESRB" />
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:gravity="left|center"
+                        android:text="Release date" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:gravity="left|center"
+                        android:text="ESRB" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="86dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/platform_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:gravity="left|center"
+                        android:text="TextView"
+                        android:textColor="@color/lightgray" />
+
+                    <TextView
+                        android:id="@+id/release_date_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:gravity="left|center"
+                        android:text="TextView"
+                        android:textColor="@color/lightgray" />
+
+                    <TextView
+                        android:id="@+id/esrb_rating_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:gravity="left|center"
+                        android:text="TextView"
+                        android:textColor="@color/lightgray" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="83dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:gravity="left|center"
+                        android:text="Developer" />
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:gravity="left|center"
+                        android:text="Publisher" />
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:gravity="left|center"
+                        android:text="Genre" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/developer_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:gravity="left|center"
+                        android:text="TextView"
+                        android:textColor="@color/lightgray" />
+
+                    <TextView
+                        android:id="@+id/publisher_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:gravity="left|center"
+                        android:text="TextView"
+                        android:textColor="@color/lightgray" />
+
+                    <TextView
+                        android:id="@+id/genre_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="41dp"
+                        android:gravity="left|center"
+                        android:text="TextView"
+                        android:textColor="@color/lightgray" />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="86dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <TextView
+                android:id="@+id/description_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="TextView"
+                app:layout_constrainedWidth="true" />
 
-                <TextView
-                    android:id="@+id/platform_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="43dp"
-                    android:gravity="left|center"
-                    android:text="TextView"
-                    android:textColor="@color/lightgray" />
-
-                <TextView
-                    android:id="@+id/release_date_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:gravity="left|center"
-                    android:text="TextView"
-                    android:textColor="@color/lightgray" />
-
-                <TextView
-                    android:id="@+id/esrb_rating_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="43dp"
-                    android:gravity="left|center"
-                    android:text="TextView"
-                    android:textColor="@color/lightgray" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="83dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="43dp"
-                    android:gravity="left|center"
-                    android:text="Developer" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:gravity="left|center"
-                    android:text="Publisher" />
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:gravity="left|center"
-                    android:text="Genre" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/developer_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="43dp"
-                    android:gravity="left|center"
-                    android:text="TextView"
-                    android:textColor="@color/lightgray" />
-
-                <TextView
-                    android:id="@+id/publisher_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:gravity="left|center"
-                    android:text="TextView"
-                    android:textColor="@color/lightgray" />
-
-                <TextView
-                    android:id="@+id/genre_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="41dp"
-                    android:gravity="left|center"
-                    android:text="TextView"
-                    android:textColor="@color/lightgray" />
-            </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/description_textview"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="TextView"
-            app:layout_constrainedWidth="true"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SAVE" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/buttonRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="REMOVE" />
+
+        </LinearLayout>
 
         <Button
-            android:id="@+id/buttonSave"
+            android:id="@+id/writeReviewButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SAVE" />
-        <Space
-            android:layout_width="16dp"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/buttonRemove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="REMOVE" />
+            android:layout_marginTop="8dp"
 
-    </LinearLayout>
+            android:text="WRITE A REVIEW"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

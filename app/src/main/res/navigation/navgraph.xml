@@ -33,4 +33,9 @@
             android:id="@+id/action_toHome"
             app:destination="@id/homeItem" />
     </fragment>
+    <fragment
+        android:id="@+id/reviewItem"
+        android:name="ba.etf.rma23.projekat.SendReviewFragment"
+        android:label="ReviewFragment"/>
+
 </navigation>

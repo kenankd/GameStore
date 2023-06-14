@@ -46,8 +46,16 @@ object GameReviewsRepository {
             if(gameReview.rating!=null)
                 gameJsonObject.put("rating",gameReview.rating)
             val mediaType = "application/json".toMediaTypeOrNull()
-            AccountAPIConfig.retrofit.sendReview(gid= gameReview.igdb_id,gameReview = gameJsonObject.toString().toRequestBody(mediaType))
-            return@withContext true
+            try{
+                AccountAPIConfig.retrofit.sendReview(gid= gameReview.igdb_id,gameReview = gameJsonObject.toString().toRequestBody(mediaType))
+                return@withContext true
+            }
+            catch(e:Exception){
+                val db = AppDatabase.getInstance(context)
+                gameReview.online=false //mozda nije potrebno
+                db.gameReviewDao().insertGameReview(gameReview)
+                return@withContext false
+            }
         }
     }
     suspend fun getReviewsForGame(igdb_id : Int):List<GameReview>{

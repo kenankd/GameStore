@@ -22,5 +22,5 @@ interface AccountApi {
     suspend fun sendReview(@Path("aid") aid: String = getHash()!!,@Path("gid") gid: Int, @Body gameReview: RequestBody)
 
     @GET("game/{gid}/gamereviews")
-    suspend fun  getReviewsForGame(@Path("gid") gid: Int) : Response<List<GameReview>>
+    suspend fun getReviewsForGame(@Path("gid") gid: Int) : Response<List<GameReview>>
 }

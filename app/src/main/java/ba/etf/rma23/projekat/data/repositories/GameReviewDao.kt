@@ -1,6 +1,7 @@
 package ba.etf.rma23.projekat.data.repositories
 
 import androidx.room.Dao
+import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.Query
 
@@ -14,5 +15,5 @@ interface GameReviewDao {
     suspend fun setReviewOnline(id: Int)
 
     @Insert
-    suspend fun insertGameReview(gameReview: GameReview)
+    suspend fun insertGameReview(vararg gameReview: GameReview)
 }
