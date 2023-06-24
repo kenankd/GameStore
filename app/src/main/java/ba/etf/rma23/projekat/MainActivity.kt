@@ -6,12 +6,15 @@ import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import ba.etf.rma23.projekat.GameData.Companion.getAll
+import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.getSavedGames
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.setAge
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.setHash
 import ba.etf.rma23.projekat.data.repositories.AppDatabase
 import ba.etf.rma23.projekat.data.repositories.GameReview
+import ba.etf.rma23.projekat.data.repositories.GameReviewsRepository.getOfflineReviews
 import ba.etf.rma23.projekat.data.repositories.GameReviewsRepository.sendReview
 import ba.etf.rma23.projekat.data.repositories.GamesRepository.getGameById
+import ba.etf.rma23.projekat.data.repositories.GamesRepository.savedGames
 import com.example.spirala.R
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -34,7 +37,10 @@ class MainActivity : AppCompatActivity() {
         }
         setHash("417fe823-f22d-41a3-b7bb-14e4d5fcfd83")
         setAge(19)
-        /*
+        /*CoroutineScope(Job()+ Dispatchers.Main).launch{
+            savedGames = getSavedGames()
+        }
+
         val context = this
         CoroutineScope(Job()+ Dispatchers.Main).launch{
             val gameReview = GameReview(1,null,"Great game!",83517,true)

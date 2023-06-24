@@ -11,6 +11,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 object GamesRepository {
     var currentGames : List<Game> = listOf()
+    var savedGames : List<Game> = listOf()
     fun setGames(games : List<Game>){
         this.currentGames=games
     }

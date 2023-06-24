@@ -10,10 +10,7 @@ import androidx.navigation.fragment.findNavController
 import ba.etf.rma23.projekat.data.repositories.GameReview
 import ba.etf.rma23.projekat.data.repositories.GameReviewsRepository.sendReview
 import com.example.spirala.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class SendReviewFragment: Fragment() {
     private lateinit var sendReviewButton: Button
@@ -54,13 +51,13 @@ class SendReviewFragment: Fragment() {
             val context = this.context
             if(spinner.selectedItemPosition==0){
                 CoroutineScope(Job() + Dispatchers.Main).launch{
-                    sendReview(GameReview(1,null,comment.text.toString(),arguments?.getInt("id")!!,false),context!!)
+                    sendReview(context!!,GameReview(null,comment.text.toString(),arguments?.getInt("id")!!,false,"",""))
                 }
             }
             else if(spinner.selectedItemPosition==1){
                 CoroutineScope(Job() + Dispatchers.Main).launch{
-                    sendReview(GameReview(1,rating.rating.toInt(),null,arguments?.getInt("id")!!,false),context!!)
-                }
+                    sendReview(context!!,GameReview(rating.rating.toInt(),null,arguments?.getInt("id")!!,false,"",""))
+               }
             }
             findNavController().navigateUp()
         }

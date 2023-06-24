@@ -1,6 +1,8 @@
 package ba.etf.rma23.projekat
 
+import android.content.Context
 import android.content.res.Configuration
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +48,6 @@ class HomeFragment: Fragment() {
         gameList.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
         searchButton=view.findViewById(R.id.search_button)
         searchText=view.findViewById(R.id.search_query_edittext)
-
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             sortSwitch=view.findViewById(R.id.sortSwitch)
             favoritesSwitch=view.findViewById(R.id.favoritesSwitch)
@@ -66,7 +67,8 @@ class HomeFragment: Fragment() {
                 }
             }
             gameListAdapter = GameListAdapter(listOf()) { game -> showGame(game) }
-            setSavedGames()
+            if( (requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetwork != null)
+                setSavedGames()
             searchButton.setOnClickListener {
                 if(getUserAge()!=null){
                     CoroutineScope(Job() + Dispatchers.Main).launch{
@@ -99,7 +101,6 @@ class HomeFragment: Fragment() {
                 }
             }
         }
-
         gameList.adapter=gameListAdapter
         gameList.layoutManager= LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
         return view
@@ -119,7 +120,12 @@ class HomeFragment: Fragment() {
     }
     private fun setSavedGames(){
         CoroutineScope(Job() + Dispatchers.Main).launch {
-            gameListAdapter.setGames(getSavedGames())
+            try {
+                gameListAdapter.setGames(getSavedGames())
+            }
+            catch(e: Exception){
+
+            }
         }
     }
 

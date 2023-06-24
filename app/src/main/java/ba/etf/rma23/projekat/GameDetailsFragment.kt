@@ -1,7 +1,9 @@
 package ba.etf.rma23.projekat
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.res.Configuration
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -80,11 +83,20 @@ class GameDetailsFragment : Fragment(){
             val bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
             bottomNav.menu.getItem(0).isEnabled=true
             game = Gson().fromJson(arguments?.getString("game"), Game::class.java)
-            runBlocking {
-                gameSaved = isGameSaved(game.id)
+            if( (requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetwork != null){
+                runBlocking {
+                    gameSaved = isGameSaved(game.id)
+                }
+                saveButton.isEnabled=!gameSaved
+                removeButton.isEnabled=gameSaved
+
+                getReviews()
             }
-            saveButton.isEnabled=!gameSaved
-            removeButton.isEnabled=gameSaved
+            else{
+                saveButton.isEnabled=false
+                removeButton.isEnabled=false
+                writeReview.isEnabled=false
+            }
             saveButton.setOnClickListener{
                 CoroutineScope(Dispatchers.Main).launch{
                     saveGame(game)
@@ -119,7 +131,6 @@ class GameDetailsFragment : Fragment(){
             }
         }
         fillDetails()
-        getReviews()
         //val list : List<UserImpression> = GameData.getDetails(title.text as String)!!.userImpressions.sortedByDescending { userImpression -> userImpression.timestamp }
         //reviewAdapter.setReviews(listOf())
         reviewList.adapter=reviewAdapter
@@ -147,10 +158,10 @@ class GameDetailsFragment : Fragment(){
             for(gameReview in gameReviews){
                 if(gameReview.rating==null && gameReview.review==null) continue;
                 else if(gameReview.rating!=null){
-                    userImpressions.add(UserRating("kenan",System.currentTimeMillis(), gameReview.rating!!.toDouble()))
+                    userImpressions.add(UserRating(gameReview.username,gameReview.timestamp.toLong(), gameReview.rating!!.toDouble()))
                 }
                 else
-                    userImpressions.add(UserReview("kenan",System.currentTimeMillis(),gameReview.review!!))
+                    userImpressions.add(UserReview(gameReview.username,gameReview.timestamp.toLong(),gameReview.review!!))
             }
             reviewAdapter.setReviews(userImpressions)
         }
