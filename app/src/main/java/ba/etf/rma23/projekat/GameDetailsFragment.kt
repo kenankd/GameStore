@@ -156,11 +156,16 @@ class GameDetailsFragment : Fragment(){
             val gameReviews = getReviewsForGame(game.id)
             for(gameReview in gameReviews){
                 if(gameReview.rating==null && gameReview.review==null) continue;
+                if(gameReview.review != null && gameReview.rating!=null){
+                    userImpressions.add(UserRating(gameReview.username,gameReview.timestamp.toLong(), gameReview.rating!!.toDouble()))
+                    userImpressions.add(UserReview(gameReview.username,gameReview.timestamp.toLong(),gameReview.review!!))
+                }
                 else if(gameReview.rating!=null){
                     userImpressions.add(UserRating(gameReview.username,gameReview.timestamp.toLong(), gameReview.rating!!.toDouble()))
                 }
-                else
+                else if(gameReview.review!=null)
                     userImpressions.add(UserReview(gameReview.username,gameReview.timestamp.toLong(),gameReview.review!!))
+
             }
             reviewAdapter.setReviews(userImpressions)
         }

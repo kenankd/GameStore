@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import ba.etf.rma23.projekat.GameData.Companion.getAll
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.getSavedGames
+import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.removeGame
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.setAge
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.setHash
 import ba.etf.rma23.projekat.data.repositories.AppDatabase

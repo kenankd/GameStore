@@ -1,5 +1,6 @@
 package ba.etf.rma23.projekat.data.repositories
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.getSavedGames
@@ -37,7 +38,8 @@ object GameReviewsRepository {
         }
     }
     //promijeniti funkciju beta verzija
-    suspend fun sendReview(context: Context,gameReview: GameReview):Boolean{
+    @SuppressLint("SuspiciousIndentation")
+    suspend fun sendReview(context: Context, gameReview: GameReview):Boolean{
         return withContext(Dispatchers.IO) {
             try {
                 var isSaved = false

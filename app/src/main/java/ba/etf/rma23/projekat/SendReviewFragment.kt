@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import ba.etf.rma23.projekat.data.repositories.GameReview
 import ba.etf.rma23.projekat.data.repositories.GameReviewsRepository.sendReview
 import com.example.spirala.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.*
 
 class SendReviewFragment: Fragment() {
@@ -19,6 +20,8 @@ class SendReviewFragment: Fragment() {
     private lateinit var rating : RatingBar
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
+        val bottomNav: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
+        bottomNav.menu.getItem(0).isEnabled=false
         val view = inflater.inflate(R.layout.send_review, container, false)
         spinner=view.findViewById(R.id.spinnerReviewType)
         comment=view.findViewById(R.id.editTextComment)
@@ -60,6 +63,7 @@ class SendReviewFragment: Fragment() {
                }
             }
             findNavController().navigateUp()
+            bottomNav.menu.getItem(0).isEnabled=true
         }
         return view
     }
