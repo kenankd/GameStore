@@ -1,4 +1,4 @@
-package ba.example.rma23
+package ba.etf.rma23
 
 import android.content.pm.ActivityInfo
 import android.view.View

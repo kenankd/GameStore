@@ -1,8 +1,7 @@
-package ba.example.rma23
+package ba.etf.rma23
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.net.ConnectivityManager
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.rules.ActivityScenarioRule
