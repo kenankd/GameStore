@@ -126,7 +126,7 @@ class DBTest {
         var uia = InstrumentationRegistry.getInstrumentation().uiAutomation
         uia.executeShellCommand("svc data enable")
         uia.executeShellCommand("svc wifi enable")
-        Thread.sleep(10000)
+        Thread.sleep(2000)
         var rez = GameReviewsRepository.sendOfflineReviews(context)
         assertEquals(rez, 1)
         executeCountAndCheck(countNotOnline, "broj_reviews", 0)

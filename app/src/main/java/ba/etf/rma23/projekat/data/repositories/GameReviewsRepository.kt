@@ -2,6 +2,7 @@ package ba.etf.rma23.projekat.data.repositories
 
 import android.content.Context
 import android.net.ConnectivityManager
+import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.getSavedGames
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.isGameSaved
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.saveGame
 import ba.etf.rma23.projekat.data.repositories.GamesRepository.getGameById
@@ -14,7 +15,6 @@ import org.json.JSONObject
 
 
 object GameReviewsRepository {
-    //mozda se ne smije slati context kao parametar
     suspend fun getOfflineReviews(context : Context):List<GameReview>{
         return withContext(Dispatchers.IO) {
             val db = AppDatabase.getInstance(context)
@@ -23,6 +23,7 @@ object GameReviewsRepository {
     }
     suspend fun sendOfflineReviews(context: Context): Int{
         return withContext(Dispatchers.IO){
+            if( (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetwork == null) return@withContext 0
             var number=0
             val db = AppDatabase.getInstance(context)
             val reviews = db.gameReviewDao().getOfflineReviews()
@@ -39,21 +40,13 @@ object GameReviewsRepository {
     suspend fun sendReview(context: Context,gameReview: GameReview):Boolean{
         return withContext(Dispatchers.IO) {
             try {
-               /* var isSaved = false
-                for (game in savedGames)
+                var isSaved = false
+                for (game in getSavedGames())
                     if (gameReview.igdb_id == game.id)
                         isSaved = true
-                if (!isSaved)
-                    saveGame(getGameById(gameReview.igdb_id)!!)*/
+                    if (!isSaved)
+                        saveGame(getGameById(gameReview.igdb_id)!!)
                 val gameJsonObject = JSONObject()
-                if( (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetwork != null){
-                    print("aa")
-                    print("aa")
-                    print("aa")
-                    print("aa")
-                    print("aa")
-                    print("aa")
-                }
                 if (gameReview.review != null)
                     gameJsonObject.put("review", gameReview.review)
                 if (gameReview.rating != null)
@@ -70,19 +63,6 @@ object GameReviewsRepository {
             db.gameReviewDao().insertGameReview(gameReview)
             return@withContext false
             }
-            //umjesto try catch bloka treba response.isSuccessfull
-            /*try{
-                AccountAPIConfig.retrofit.sendReview(gid= gameReview.igdb_id,gameReview = gameJsonObject.toString().toRequestBody(mediaType))
-                if(!isSaved)
-                    saveGame(getGameById(gameReview.igdb_id)!!)
-                return@withContext true
-            }
-            catch(e: Exception){
-                val db = AppDatabase.getInstance(context)
-                gameReview.online=false //mozda nije potrebno
-                db.gameReviewDao().insertGameReview(gameReview)
-                return@withContext false
-            }*/
         }
     }
     suspend fun getReviewsForGame(igdb_id : Int):List<GameReview>{

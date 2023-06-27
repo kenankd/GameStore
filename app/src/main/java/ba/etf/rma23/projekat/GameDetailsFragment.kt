@@ -89,7 +89,6 @@ class GameDetailsFragment : Fragment(){
                 }
                 saveButton.isEnabled=!gameSaved
                 removeButton.isEnabled=gameSaved
-
                 getReviews()
             }
             else{

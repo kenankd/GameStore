@@ -1,6 +1,8 @@
 package ba.etf.rma23.projekat
 
+import android.content.Context
 import android.content.res.Configuration
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
@@ -37,10 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
         setHash("417fe823-f22d-41a3-b7bb-14e4d5fcfd83")
         setAge(19)
-        /*CoroutineScope(Job()+ Dispatchers.Main).launch{
-            savedGames = getSavedGames()
-        }
-
+/*
         val context = this
         CoroutineScope(Job()+ Dispatchers.Main).launch{
             val gameReview = GameReview(1,null,"Great game!",83517,true)
