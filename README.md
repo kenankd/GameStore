@@ -20,9 +20,6 @@ GameStore is an Android app built using Kotlin in Android Studio that serves as 
 - Android Architecture Components: Used to implement best practices for Android app development.
 - Other standard Android libraries and components: Used to create the user interface, handle navigation, and manage data.
 
-## Screenshots
-
-
 
 ## Getting Started
 
