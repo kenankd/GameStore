@@ -145,6 +145,21 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-300008226">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_5_API_30" value="120" />
+                  <entry key="R5CT7001AFV" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung&#10; SM-A528B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="81580939">
           <value>
             <AndroidTestResultsTableState>
@@ -210,6 +225,7 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="Pixel_5_API_30" value="120" />
                   <entry key="R5CT7001AFV" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="samsung" value="120" />

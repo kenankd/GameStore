@@ -39,8 +39,8 @@ class DBTest {
 
     //pri testiranju zamjenite hash sa vašim i id igre umjesto 22 postavite na neki drugi broj
     // da ne bi došlo do konfuzije oko rezultata testova ako dva studenta istovremeno testiraju svoj kod
-    private val HASH = "417fe823-f22d-41a3-b7bb-14e4d5fcfd83"
-    private val idIGRE = 199243
+    private val HASH = "ca0ee672-440b-45b2-8a12-75b80f4fbdd3"
+    private val idIGRE = 22
 
 
     private val countNotOnline =
@@ -75,7 +75,9 @@ class DBTest {
             val scenario = ActivityScenario.launch(
                 MainActivity::class.java
             )
+
             context = ApplicationProvider.getApplicationContext<Context>()
+            GameReviewsRepository.getOfflineReviews(context)
 
             baza = context.databaseList().minBy { x -> x.length }
             db = SQLiteDatabase.openDatabase(
@@ -114,17 +116,17 @@ class DBTest {
         InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc wifi disable")
         InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc data disable")
         Thread.sleep(2000)
-
-        var rez = GameReviewsRepository.sendReview(context, GameReview(3, "dobro", idIGRE, false, "", ""))
-       assert(!rez) { "Should return false" }
+        var rez =
+            GameReviewsRepository.sendReview(context, GameReview(3, "dobro", idIGRE, false, "", ""))
+        assert(!rez) { "Should return false" }
         executeCountAndCheck(countNotOnline, "broj_reviews", 1)
     }
 
     @Test
     fun a4_enableInternetAndSendOffline() = runBlocking {
         var uia = InstrumentationRegistry.getInstrumentation().uiAutomation
-        uia.executeShellCommand("svc data enable")
         uia.executeShellCommand("svc wifi enable")
+        uia.executeShellCommand("svc data enable")
         Thread.sleep(2000)
         var rez = GameReviewsRepository.sendOfflineReviews(context)
         assertEquals(rez, 1)
@@ -143,6 +145,35 @@ class DBTest {
         obrisi()
         var rez = GameReviewsRepository.getReviewsForGame(idIGRE)
         assertEquals(rez.size, 0)
+    }
+
+    @Test(timeout=9000)
+    fun a7_add3OfflineAndCount() = runBlocking {
+        InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc wifi disable")
+        InstrumentationRegistry.getInstrumentation().uiAutomation.executeShellCommand("svc data disable")
+        Thread.sleep(2000)
+        var rez =
+            GameReviewsRepository.sendReview(context, GameReview(4, "dobro", 200, false, "", ""))
+        assert(!rez) { "Should return false" }
+        rez =
+            GameReviewsRepository.sendReview(context, GameReview(5, "dobro", 300, false, "", ""))
+        assert(!rez) { "Should return false" }
+        rez =
+            GameReviewsRepository.sendReview(context, GameReview(6, "dobro", 400, false, "", ""))
+        assert(!rez) { "Should return false" }
+
+        executeCountAndCheck(countNotOnline, "broj_reviews", 3)
+    }
+
+    @Test(timeout=24000)
+    fun a8_sendAllOnline() = runBlocking{
+        var uia = InstrumentationRegistry.getInstrumentation().uiAutomation
+        uia.executeShellCommand("svc wifi enable")
+        uia.executeShellCommand("svc data enable")
+        Thread.sleep(2000)
+        var rez = GameReviewsRepository.sendOfflineReviews(context)
+        assertEquals(rez, 3)
+        executeCountAndCheck(countNotOnline, "broj_reviews", 0)
     }
 
 

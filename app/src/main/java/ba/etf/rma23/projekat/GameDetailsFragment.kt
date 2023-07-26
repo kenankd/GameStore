@@ -24,6 +24,7 @@ import ba.etf.rma23.projekat.GameData.Companion.getAll
 import ba.etf.rma23.projekat.GameData.Companion.getDetails
 import ba.etf.rma23.projekat.GameDetailsFragmentArgs
 import ba.etf.rma23.projekat.GameDetailsFragmentDirections
+import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.favoriteGames
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.getSavedGames
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.isGameSaved
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.removeGame
@@ -69,11 +70,13 @@ class GameDetailsFragment : Fragment(){
         reviewList=view.findViewById(R.id.review_list)
         reviewAdapter = ReviewListAdapter(mutableListOf())
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            //opening first game
             if(!arguments?.containsKey("game")!!){
                 runBlocking{
                     game=getGameById(76239)!!
                 }
             }
+            //opening clicked game
             else game = Gson().fromJson(arguments?.getString("game"), Game::class.java)
         }
         else {
@@ -84,9 +87,7 @@ class GameDetailsFragment : Fragment(){
             bottomNav.menu.getItem(0).isEnabled=true
             game = Gson().fromJson(arguments?.getString("game"), Game::class.java)
             if( (requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetwork != null){
-                runBlocking {
-                    gameSaved = isGameSaved(game.id)
-                }
+                gameSaved = favoriteGames.contains(game)
                 saveButton.isEnabled=!gameSaved
                 removeButton.isEnabled=gameSaved
                 getReviews()
@@ -147,7 +148,7 @@ class GameDetailsFragment : Fragment(){
         genre.text=game.genre
         description.text=game.summary
         if(game.cover!="")
-        Picasso.get().load("https:" + game.cover.substring(1,game.cover.length-1)).centerCrop().resize(550,500).into(cover)
+            Picasso.get().load("https:" + game.cover.substring(1,game.cover.length-1)).centerCrop().resize(550,500).into(cover)
         cover.scaleType = ImageView.ScaleType.CENTER_INSIDE
     }
     fun getReviews(){

@@ -1,9 +1,6 @@
 package ba.etf.rma23.projekat.data.repositories
 
-import androidx.room.Dao
-import androidx.room.Entity
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface GameReviewDao {
@@ -14,6 +11,6 @@ interface GameReviewDao {
     @Query("UPDATE GameReview SET online = 1 WHERE id = :id")
     suspend fun setReviewOnline(id: Int)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertGameReview(vararg gameReview: GameReview)
 }

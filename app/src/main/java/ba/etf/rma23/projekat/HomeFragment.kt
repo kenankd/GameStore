@@ -21,6 +21,7 @@ import ba.etf.rma23.projekat.GameData.Companion.getAll
 import ba.etf.rma23.projekat.GameDetailsFragmentDirections
 import ba.etf.rma23.projekat.HomeFragmentArgs
 import ba.etf.rma23.projekat.HomeFragmentDirections
+import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.favoriteGames
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.getGamesContainingString
 import ba.etf.rma23.projekat.data.repositories.AccountGamesRepository.getSavedGames
 
@@ -121,10 +122,10 @@ class HomeFragment: Fragment() {
     private fun setSavedGames(){
         CoroutineScope(Job() + Dispatchers.Main).launch {
             try {
-                gameListAdapter.setGames(getSavedGames())
+                gameListAdapter.setGames(favoriteGames)
             }
             catch(e: Exception){
-
+                //something
             }
         }
     }
