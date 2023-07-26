@@ -28,7 +28,7 @@ GameStore is an Android app built using Kotlin in Android Studio that serves as 
 
 To run the GameStore app on your Android device or emulator, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your_username/GameStore.git`
+1. Clone the repository: `git clone https://github.com/kenankd/GameStore.git`
 
 2. Open the project in Android Studio.
 
